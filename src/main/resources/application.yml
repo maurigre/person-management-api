@@ -1,5 +1,27 @@
 
+server:
+  port: 8086
 
 application:
   version: 0.1
   title: API-MANAGEMENT PEOPLE
+
+spring:
+
+  datasource:
+    url: "jdbc:h2:mem:person_management_db"
+    username: "sa"
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: "/h2-console"
