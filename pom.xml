@@ -16,7 +16,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<jacoco.version>0.8.6</jacoco.version>
-		<jacoco.coverage.line>0.9</jacoco.coverage.line>
+		<jacoco.coverage.line>0.1</jacoco.coverage.line>
 		<jacoco.branch.coverage>1.0</jacoco.branch.coverage>
 	</properties>
 	<dependencies>
@@ -64,7 +64,12 @@
 			<artifactId>jakarta.inject-api</artifactId>
 			<version>2.0.0</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>dev.valora.commons</groupId>
+            <artifactId>spring-hateoas-response-assembler</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>
@@ -80,7 +85,7 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<!--<plugin>
+			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco.version}</version>
@@ -125,18 +130,18 @@
 											<value>COVEREDRATIO</value>
 											<minimum>${jacoco.coverage.line}</minimum>
 										</limit>
-	&lt;!&ndash;									<limit>
+	<!--									<limit>
 											<counter>BRANCH</counter>
 											<value>COVEREDRATIO</value>
 											<minimum>${jacoco.branch.coverage}</minimum>
-										</limit>&ndash;&gt;
+										</limit>-->
 									</limits>
 								</rule>
 							</rules>
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>-->
+			</plugin>
 		</plugins>
 	</build>
 
