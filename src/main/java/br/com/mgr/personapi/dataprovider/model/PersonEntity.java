@@ -2,6 +2,7 @@ package br.com.mgr.personapi.dataprovider.model;
 
 
 import lombok.*;
+import lombok.ToString.Exclude;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

@@ -2,9 +2,9 @@ package br.com.mgr.personapi.core.entity;
 
 public enum PhoneType {
 
-    HOME("Home"),
-    MOBILE("Mobile"),
-    COMMERCIAL("Commercial");
+    HOME("HOME"),
+    MOBILE("MOBILE"),
+    COMMERCIAL("COMMERCIAL");
 
     private final String description;
 

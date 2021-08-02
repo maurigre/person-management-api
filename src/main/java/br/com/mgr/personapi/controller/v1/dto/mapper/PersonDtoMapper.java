@@ -18,6 +18,7 @@ public class PersonDtoMapper {
                 .firstName(person.getFirstName())
                 .lastName(person.getLastName())
                 .cpf(person.getCpf())
+                .birthDate(person.getBirthDate())
                 .phones(phoneDtos).build();
     }
 }
