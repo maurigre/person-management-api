@@ -1,19 +1,19 @@
-package br.com.mgr.personapi.core.usercase.imp;
+package br.com.mgr.personapi.core.usecase.imp;
 
 import br.com.mgr.personapi.core.exception.CreatePersonFailException;
 import br.com.mgr.personapi.core.exception.FoundPersonException;
 import br.com.mgr.personapi.core.repository.PersonRepository;
-import br.com.mgr.personapi.core.usercase.CreatePersonUseCase;
+import br.com.mgr.personapi.core.usecase.CreatePersonUseCase;
 import br.com.mgr.personapi.core.entity.Person;
 
 import java.util.Optional;
 
 
-public class CreatePersonUserCaseImp implements CreatePersonUseCase {
+public class CreatePersonUseCaseImp implements CreatePersonUseCase {
 
     private PersonRepository repository;
 
-    public CreatePersonUserCaseImp(PersonRepository repository) {
+    public CreatePersonUseCaseImp(PersonRepository repository) {
       this.repository = repository;
     }
 

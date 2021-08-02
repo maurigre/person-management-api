@@ -1,29 +1,8 @@
 package br.com.mgr.personapi.services.person;
 
-import br.com.mgr.personapi.dataprovider.model.PersonEntity;
-import br.com.mgr.personapi.dataprovider.model.PhoneEntity;
-import br.com.mgr.personapi.dataprovider.repository.PersonDao;
-import br.com.mgr.personapi.core.exception.CreatePersonFailException;
-import br.com.mgr.personapi.core.exception.FoundPersonException;
-import br.com.mgr.personapi.services.person.imp.CreatePersonUserCaseImp;
-import br.com.mgr.personapi.services.person.imp.PersonServiceImp;
-import br.com.mgr.personapi.services.person.usercase.CreatePersonUseCase;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-
 //@ExtendWith(MockitoExtension.class)
 class PersonServiceUnitTest {
+/*
 
     PersonServiceImp personService;
     PersonDao repository;
@@ -96,4 +75,5 @@ class PersonServiceUnitTest {
         assertThat(save).isEqualTo(person);
         assertEquals(person, personService.create(new PersonEntity()));
     }
+*/
 }
