@@ -1,7 +1,7 @@
 package br.com.mgr.personapi.services.person;
 
 //@ExtendWith(MockitoExtension.class)
-class PersonServiceUnitTest {
+class PersonServiceTest {
 /*
 
     PersonServiceImp personService;
