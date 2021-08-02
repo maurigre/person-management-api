@@ -1,35 +1,27 @@
 package br.com.mgr.personapi.service.person.imp;
 
+import br.com.mgr.personapi.controller.v1.dto.mapper.PersonDtoMapper;
+import br.com.mgr.personapi.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.core.entity.Person;
-import br.com.mgr.personapi.core.entity.Phone;
-import br.com.mgr.personapi.core.usercase.CreatePersonUseCase;
+import br.com.mgr.personapi.core.usecase.CreatePersonUseCase;
+import br.com.mgr.personapi.dataprovider.mapper.PersonMapper;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
-import br.com.mgr.personapi.dataprovider.repository.PersonDao;
 import br.com.mgr.personapi.service.person.PersonService;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class PersonServiceImp implements PersonService {
 
     private CreatePersonUseCase createPersonUseCase;
-    private PersonDao repository;
 
-    public PersonServiceImp(CreatePersonUseCase createPersonUseCase, PersonDao repository) {
+    public PersonServiceImp(CreatePersonUseCase createPersonUseCase) {
         this.createPersonUseCase = createPersonUseCase;
-        this.repository = repository;
     }
 
     @Override
-    public PersonEntity create(PersonEntity personEntity) {
-        Person person = new Person(
-                personEntity.getId(),
-                personEntity.getFirstName(),
-                personEntity.getLastName(),
-                personEntity.getCpf(),
-                personEntity.getBirthDate(),
-               );
-        Person person = createPersonUseCase.create(personEntity);
-
-        return createPersonUseCase.create(personEntity);
+    public PersonDto create(PersonEntity personEntity) {
+        final Person person = createPersonUseCase.create(PersonMapper.personEntityToPerson(personEntity));
+        return PersonDtoMapper.personToPersonDto(person);
     }
 
     public void deleteById(Long id) {

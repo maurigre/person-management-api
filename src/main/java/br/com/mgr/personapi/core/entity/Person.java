@@ -16,6 +16,9 @@ public class Person {
     private LocalDate birthDate;
     private List<Phone> phones;
 
+    public Person() {
+    }
+
     public Person(UUID id, String firstName, String lastName, String cpf, LocalDate birthDate, List<Phone> phones) {
         this.id = id;
         this.firstName = firstName;

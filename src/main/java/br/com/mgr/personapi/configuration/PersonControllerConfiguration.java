@@ -1,16 +1,13 @@
 package br.com.mgr.personapi.configuration;
 
-import br.com.mgr.aluno.usecase.RegistroAluno;
-import br.com.mgr.controller.AlunoController;
-import br.com.mgr.converter.AlunoRequestConverter;
 import br.com.mgr.personapi.controller.v1.PersonController;
-import br.com.mgr.personapi.core.usercase.CreatePersonUseCase;
-import br.com.mgr.personapi.core.usercase.imp.CreatePersonUserCaseImp;
+import br.com.mgr.personapi.core.usecase.CreatePersonUseCase;
+import br.com.mgr.personapi.core.usecase.imp.CreatePersonUseCaseImp;
 import br.com.mgr.personapi.dataprovider.repository.PersonDao;
 import br.com.mgr.personapi.dataprovider.repository.PersonDaoImp;
 import br.com.mgr.personapi.service.person.PersonService;
 import br.com.mgr.personapi.service.person.imp.PersonServiceImp;
-import br.com.mgr.repository.AlunoRepositoryImp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,27 +19,22 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PersonControllerConfiguration {
 
+    @Autowired
+    private PersonDao personDao;
+
     @Bean
-    public PersonController personControllerConfigration(
-            RegistroAluno registroAluno,
-            AlunoRequestConverter requestConverter) {
-        return new AlunoController(registroAluno, requestConverter);
+    public PersonController personControllerConfigration(PersonService service) {
+        return new PersonController(service);
 
     }
 
     @Bean
-    public PersonService createPersonConfigration() {
-        new PersonServiceImp(new PersonDaoImp())
-        return new CreatePersonUserCaseImp(new PersonDaoImp());
+    public PersonService personServiceConfigration() {
+        final CreatePersonUseCase createPersonUseCase =
+                new CreatePersonUseCaseImp(new PersonDaoImp(personDao));
+        return new PersonServiceImp( createPersonUseCase);
 
     }
-
-    @Bean
-    public AlunoRequestConverter converterPersonConfigration() {
-        return new AlunoRequestConverter();
-
-    }
-
 
 }
 

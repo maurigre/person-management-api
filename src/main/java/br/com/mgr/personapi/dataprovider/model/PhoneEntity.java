@@ -3,6 +3,7 @@ package br.com.mgr.personapi.dataprovider.model;
 import br.com.mgr.personapi.core.entity.PhoneType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Builder
 public class PhoneEntity {
 
