@@ -28,6 +28,7 @@ class PhoneTest {
         final Phone y = new Phone(ID, TYPE, "16444444444");
         final Phone z = new Phone(2L, TYPE, NUMBER);
 
+        assertFalse(x.equals(new Object()));
         assertFalse(x.equals(y) && y.equals(x));
         assertFalse(x.equals(z) && y.equals(x));
         assertFalse(x.equals(y) && y.equals(z));
