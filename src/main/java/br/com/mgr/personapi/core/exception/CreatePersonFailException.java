@@ -1,4 +1,4 @@
-package br.com.mgr.personapi.exception;
+package br.com.mgr.personapi.core.exception;
 
 public class CreatePersonFailException extends RuntimeException {
 

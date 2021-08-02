@@ -2,22 +2,25 @@ package br.com.mgr.personapi.dataprovider.model;
 
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-@Data
-@Builder
+@Entity
+@Table(name = "person")
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Person {
+@Getter
+@Builder
+public class PersonEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    private UUID id;
 
     @Column(nullable = false)
     private String firstName;
@@ -31,5 +34,7 @@ public class Person {
     private LocalDate birthDate;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    private List<Phone> phones;
+    private List<PhoneEntity> phoneEntities;
+
+
 }
