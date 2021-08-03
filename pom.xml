@@ -16,8 +16,9 @@
 	<properties>
 		<java.version>11</java.version>
 		<jacoco.version>0.8.6</jacoco.version>
-		<jacoco.coverage.line>0.1</jacoco.coverage.line>
+		<jacoco.coverage.line>0.9</jacoco.coverage.line>
 		<jacoco.branch.coverage>1.0</jacoco.branch.coverage>
+		<coverage.excluded.code></coverage.excluded.code>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -69,6 +70,16 @@
             <artifactId>spring-hateoas-response-assembler</artifactId>
             <version>2.0.0</version>
         </dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>json-schema-validator</artifactId>
+			<scope>test</scope>
+		</dependency>
     </dependencies>
 
 	<build>
@@ -91,7 +102,9 @@
 				<version>${jacoco.version}</version>
 				<configuration>
 					<excludes>
+						<exclude>**/*Config.*</exclude>
 						<exclude>**/PersonapiApplication*</exclude>
+						<exclude>${coverage.excluded.code}</exclude>
 					</excludes>
 				</configuration>
 				<executions>
