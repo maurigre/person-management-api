@@ -48,6 +48,8 @@ class PersonDtoMapperTest {
         final PersonDto personDto = PersonDtoMapper.personToPersonDto(person);
         final PhoneDto phoneDto = personDto.getPhones().get(0);
 
+        System.out.println(personDto.toString());
+
         assertThat(personDto.getFirstName()).isEqualTo(person.getFirstName());
         assertThat(personDto.getLastName()).isEqualTo(person.getLastName());
         assertThat(personDto.getCpf()).isEqualTo(person.getCpf());
@@ -55,5 +57,27 @@ class PersonDtoMapperTest {
         assertThat(phoneDto.getType()).isEqualTo(phone.getType().getDescription().toString());
         assertThat(phoneDto.getNumber()).isEqualTo(phone.getNumber());
 
+    }
+
+    @Test
+    @DisplayName("Deve receber objeto PersoDto and retornar objeto PersonEntity")
+    public void shouldReceivePersonDtoAndReturnPersonEntity(){
+        PhoneDto phoneDto = new PhoneDto(PHONES.get(0).getType().getDescription(), PHONES.get(0).getNumber());
+        PersonDto personDto = PersonDto.builder()
+                .firstName(FIRST_NAME)
+                .lastName(LAST_NAME)
+                .cpf(CPF)
+                .birthDate(BIRTH_DATE)
+                .phones(List.of(phoneDto)).build();
+
+        PersonEntity personEntity = PersonDtoMapper.personDtoToPersonEntity(personDto);
+        PhoneEntity phoneEntity = personEntity.getPhoneEntities().get(0);
+
+        assertThat(personEntity.getFirstName()).isEqualTo(personDto.getFirstName());
+        assertThat(personEntity.getLastName()).isEqualTo(personDto.getLastName());
+        assertThat(personEntity.getCpf()).isEqualTo(personDto.getCpf());
+        assertThat(personEntity.getBirthDate()).isEqualTo(personDto.getBirthDate());
+        assertThat(phoneEntity.getType()).isEqualTo(PhoneType.valueOf(phoneDto.getType()));
+        assertThat(phoneEntity.getNumber()).isEqualTo(phoneDto.getNumber());
     }
 }
