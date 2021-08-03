@@ -20,8 +20,7 @@ import java.util.UUID;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class PersonDaoImpTest {
 
@@ -101,8 +100,15 @@ class PersonDaoImpTest {
 
         Person save = personDaoImp.save(person);
 
-       assertThat(save).isNotNull();
+        assertThat(save).isNotNull();
 
+    }
+
+    @Test
+    @DisplayName("deve delete Person")
+    public void shouldDeletePerson (){
+        personDaoImp.deleteById(ID.toString());
+        verify(repository).deleteById(any());
     }
 
 }
