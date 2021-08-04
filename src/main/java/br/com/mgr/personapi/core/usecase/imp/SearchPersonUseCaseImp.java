@@ -22,16 +22,14 @@ public class SearchPersonUseCaseImp implements SearchPersonUseCase {
     @Override
     public Person findById(UUID id) {
         final Optional<Person> personOptional = repository.findById(id);
-        if (personOptional.isPresent()) {
-            return personOptional.get();
-        } else throw new NotFoundPersonException();
+        return personOptional.orElseThrow(NotFoundPersonException::new);
     }
 
     @Override
     public List<Person> findAll() {
-        final Optional<Person> personOptional = repository.findAll();
-        if(personOptional.isPresent()) {
-            return personOptional.stream().collect(Collectors.toList());
+        List<Person> persons = repository.findAll();
+        if(!persons.isEmpty()) {
+            return persons;
         } else throw new EmptyListPersonException();
     }
 }

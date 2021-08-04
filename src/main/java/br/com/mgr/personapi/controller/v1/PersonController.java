@@ -5,14 +5,13 @@ import br.com.mgr.personapi.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.controller.v1.dto.response.Response;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
 import br.com.mgr.personapi.service.person.PersonService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/peoples")
@@ -34,5 +33,12 @@ public class PersonController {
         response.setData(dto);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<Response<List<PersonDto>>> findAll() {
+        Response<List<PersonDto>> response = new Response<>();
+        response.setData(personService.findAll());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
