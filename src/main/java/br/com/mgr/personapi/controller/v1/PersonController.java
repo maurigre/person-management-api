@@ -1,20 +1,21 @@
 package br.com.mgr.personapi.controller.v1;
 
+import br.com.mgr.personapi.controller.v1.dto.mapper.PersonDtoMapper;
 import br.com.mgr.personapi.controller.v1.dto.person.PersonDto;
-import br.com.mgr.personapi.core.entity.PhoneType;
+import br.com.mgr.personapi.controller.v1.dto.response.Response;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
-import br.com.mgr.personapi.dataprovider.model.PhoneEntity;
 import br.com.mgr.personapi.service.person.PersonService;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.UUID;
+import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/people")
+@RequestMapping("/api/v1/peoples")
 public class PersonController {
 
     PersonService personService;
@@ -23,17 +24,15 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @GetMapping
-    public String getPeoples(){
-        PersonEntity person = PersonEntity.builder()
-                .id(UUID.randomUUID())
-                .firstName("Mauri")
-                .lastName("Reis")
-                .cpf("11111111111")
-                .birthDate(LocalDate.of(2019, 12, 01))
-                .phoneEntities(List.of(new PhoneEntity(1L, PhoneType.COMMERCIAL, "16999994444")))
-                .build();
-        final PersonDto personDto = personService.create(person);
-        return personDto.toString();
+    @PostMapping
+    public ResponseEntity<Response<PersonDto>> create(@RequestBody @Valid PersonDto personDto){
+
+        PersonEntity personEntity = PersonDtoMapper.personDtoToPersonEntity(personDto);
+        PersonDto dto = personService.create(personEntity);
+
+        Response<PersonDto> response = new Response<>();
+        response.setData(dto);
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

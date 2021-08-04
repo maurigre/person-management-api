@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.validation.constraints.NotNull;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Builder
+@Getter
 public class PersonDto extends RepresentationModel<PersonDto> {
 
     private String firstName;

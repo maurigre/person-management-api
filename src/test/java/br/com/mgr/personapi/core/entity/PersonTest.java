@@ -41,6 +41,7 @@ class PersonTest {
         Person y = person2;
         Person z = person3;
 
+        assertFalse(x.equals(new Object()));
         assertFalse(x.equals(y) && y.equals(x));
         assertFalse(x.equals(z) && y.equals(x));
         assertFalse(x.equals(y) && y.equals(z));
