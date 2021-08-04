@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import java.awt.*;
 import java.util.List;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.springframework.http.MediaType.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -32,24 +33,14 @@ class PersonControllerTest {
     }
 
     @Test
-    void test() throws JSONException {
-        /*{
-            "firstName":"Alex",
-                "lastName":"Medeiros",
-                "cpf":"11111111111",
-                "birthDate":"2019-12-01",
-                "phones":[
-            {
-                "type":"COMMERCIAL",
-                    "number":"16999994444"
-            }
-    ]
-        }*/
+    void givenAPersonWhenPostThenReturnCreated() throws JSONException {
         JSONObject phone = new JSONObject()
                 .put("type", "COMMERCIAL")
                 .put("number", "16999994444");
+
         JSONArray phones = new JSONArray().put(phone);
-        String code = RestAssured.given()
+
+        RestAssured.given()
                 .contentType(APPLICATION_JSON_VALUE)
                 .body(
                         new JSONObject()
@@ -62,10 +53,7 @@ class PersonControllerTest {
                 .post("api/v1/peoples")
                 .then()
                 .statusCode(HttpStatus.CREATED.value())
-                .extract()
-                .jsonPath()
-                .getString("id");
-
+                .body(matchesJsonSchemaInClasspath("person_schema.json"));
 
     }
 

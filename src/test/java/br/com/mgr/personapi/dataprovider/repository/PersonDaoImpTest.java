@@ -105,6 +105,47 @@ class PersonDaoImpTest {
     }
 
     @Test
+    @DisplayName("deve passar um id e retornar a pessoa")
+    public void shouldPassAnIdAndReturnPerson (){
+        final PersonEntity personEntity = PersonEntity.builder()
+                .id(ID)
+                .firstName(FIRST_NAME)
+                .lastName(LAST_NAME)
+                .cpf(CPF)
+                .birthDate(BIRTH_DATE)
+                .phoneEntities(PHONES_ENTITY)
+                .build();
+
+        when(repository.findById(any())).thenReturn(Optional.of(personEntity));
+
+        Optional<Person> optionalPerson = personDaoImp.findById(any(UUID.class));
+
+        assertTrue(optionalPerson.isPresent());
+
+    }
+
+    @Test
+    @DisplayName("deve buscar todas as pessoas cadastradas e retornar uma lista de pessoas")
+    public void shouldSearchAllPersonAndReturnListPerson (){
+        final PersonEntity personEntity = PersonEntity.builder()
+                .id(ID)
+                .firstName(FIRST_NAME)
+                .lastName(LAST_NAME)
+                .cpf(CPF)
+                .birthDate(BIRTH_DATE)
+                .phoneEntities(PHONES_ENTITY)
+                .build();
+
+        when(repository.findAll()).thenReturn(List.of(personEntity));
+        List<Person> persons = personDaoImp.findAll();
+
+        assertFalse(persons.isEmpty());
+        assertThat(persons.size()).isEqualTo(1);
+
+    }
+
+
+    @Test
     @DisplayName("deve delete Person")
     public void shouldDeletePerson (){
         personDaoImp.deleteById(ID.toString());
