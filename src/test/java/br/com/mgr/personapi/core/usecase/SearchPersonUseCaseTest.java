@@ -75,7 +75,7 @@ class SearchPersonUseCaseTest {
 
     @Test
     @DisplayName("Deve buscar a pessoa por id e retorna os dados da pessoa cadastrada")
-    void shouldSearchPersonPerIdAndReturnPerson() {
+    void shouldSearchPersonPerIdAndReturnPerson() throws NotFoundPersonException {
 
         Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
 
@@ -102,7 +102,7 @@ class SearchPersonUseCaseTest {
     }
     @Test
     @DisplayName("Deve buscar lista de pessoas e retorna a lista de pessoas cadastradas")
-    void shouldSearchAllPersonAndReturnListPerson() {
+    void shouldSearchAllPersonAndReturnListPerson() throws EmptyListPersonException {
 
         Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
 

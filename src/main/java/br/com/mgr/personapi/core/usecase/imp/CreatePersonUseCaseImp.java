@@ -18,7 +18,7 @@ public class CreatePersonUseCaseImp implements CreatePersonUseCase {
     }
 
     @Override
-    public Person create(Person person) {
+    public Person create(Person person) throws CreatePersonFailException, FoundPersonException {
         final Optional<Person> personOptional = repository.findByCpf(person.getCpf());
         if (!personOptional.isPresent()) {
             final Optional<Person> save = Optional.ofNullable(repository.save(person));

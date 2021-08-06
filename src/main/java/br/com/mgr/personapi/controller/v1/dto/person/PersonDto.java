@@ -18,16 +18,19 @@ import java.util.List;
 @Getter
 public class PersonDto extends RepresentationModel<PersonDto> {
 
+    @NotNull(message = "First name cannot be null ")
     private String firstName;
+
+    @NotNull(message = "Last name cannot be null ")
     private String lastName;
+
+    @NotNull(message = "Cpf name cannot be null ")
     private String cpf;
 
-/*
-    @NotNull(message = "Data hora não pode ser null")
+    @NotNull(message = "Date time cannot be null ")
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-*/
     private LocalDate birthDate;
 
     private List<PhoneDto> phones;

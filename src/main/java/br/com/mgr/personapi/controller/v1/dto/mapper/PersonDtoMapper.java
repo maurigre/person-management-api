@@ -24,6 +24,24 @@ public class PersonDtoMapper {
                 .phones(phoneDtos).build();
     }
 
+    public static PersonDto personEntityToPersonDto(PersonEntity perpersonEntityon){
+        final List<PhoneDto> phoneDtos = perpersonEntityon.getPhoneEntities().stream()
+                .map(phone -> new PhoneDto(phone.getType().getDescription(), phone.getNumber()))
+                .collect(Collectors.toList());
+        return PersonDto.builder()
+                .firstName(perpersonEntityon.getFirstName())
+                .lastName(perpersonEntityon.getLastName())
+                .cpf(perpersonEntityon.getCpf())
+                .birthDate(perpersonEntityon.getBirthDate())
+                .phones(phoneDtos).build();
+    }
+
+    public static List<PersonDto> personEntityToPersonDto(List<PersonEntity> personEntity){
+        return personEntity.stream()
+                .map(PersonDtoMapper::personEntityToPersonDto)
+                .collect(Collectors.toList());
+    }
+
     public static PersonEntity personDtoToPersonEntity(PersonDto personDto){
         List<PhoneEntity> phoneEntities = personDto.getPhones().stream().map(phoneDto -> PhoneEntity.builder()
                 .number(phoneDto.getNumber())

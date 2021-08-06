@@ -76,7 +76,7 @@ class CreatePersonUseCaseTest {
 
    @Test
    @DisplayName("Deve cadastrar pessoa e retorna os dados da pessoa cadastrada")
-   void shouldCreatedPersonAndReturnPerson() {
+   void shouldCreatedPersonAndReturnPerson() throws FoundPersonException, CreatePersonFailException {
 
       Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
 

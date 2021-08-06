@@ -3,6 +3,10 @@ package br.com.mgr.personapi.service.person.imp;
 import br.com.mgr.personapi.controller.v1.dto.mapper.PersonDtoMapper;
 import br.com.mgr.personapi.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.core.entity.Person;
+import br.com.mgr.personapi.core.exception.CreatePersonFailException;
+import br.com.mgr.personapi.core.exception.EmptyListPersonException;
+import br.com.mgr.personapi.core.exception.FoundPersonException;
+import br.com.mgr.personapi.core.exception.NotFoundPersonException;
 import br.com.mgr.personapi.core.usecase.CreatePersonUseCase;
 import br.com.mgr.personapi.core.usecase.SearchPersonUseCase;
 import br.com.mgr.personapi.dataprovider.mapper.PersonMapper;
@@ -29,23 +33,24 @@ public class PersonServiceImp implements PersonService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public PersonDto create(PersonEntity personEntity) {
+    public PersonEntity create(PersonDto personDto) throws FoundPersonException, CreatePersonFailException {
+        final PersonEntity personEntity = PersonDtoMapper.personDtoToPersonEntity(personDto);
         final Person person = createPersonUseCase.create(PersonMapper.personEntityToPerson(personEntity));
-        return PersonDtoMapper.personToPersonDto(person);
+        return PersonMapper.personToPersonEntity(person);
     }
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public PersonDto findById(UUID id) {
+    public PersonEntity findById(UUID id) throws NotFoundPersonException {
         final Person person = searchPersonUseCase.findById(id);
-        return PersonDtoMapper.personToPersonDto(person);
+        return PersonMapper.personToPersonEntity(person);
     }
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<PersonDto> findAll() {
+    public List<PersonEntity> findAll() throws EmptyListPersonException {
         return searchPersonUseCase.findAll().stream()
-                .map(PersonDtoMapper::personToPersonDto)
+                .map(PersonMapper::personToPersonEntity)
                 .collect(Collectors.toList());
     }
 
@@ -57,7 +62,7 @@ public class PersonServiceImp implements PersonService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public PersonDto updateById(UUID id, PersonEntity person) {
+    public PersonEntity updateById(UUID id, PersonDto personDto) {
         return null;
     }
 

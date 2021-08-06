@@ -1,15 +1,21 @@
 package br.com.mgr.personapi.services.person;
 
+import br.com.mgr.personapi.controller.v1.dto.mapper.PersonDtoMapper;
 import br.com.mgr.personapi.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.core.entity.Person;
 import br.com.mgr.personapi.core.entity.Phone;
 import br.com.mgr.personapi.core.entity.PhoneType;
+import br.com.mgr.personapi.core.exception.CreatePersonFailException;
+import br.com.mgr.personapi.core.exception.EmptyListPersonException;
+import br.com.mgr.personapi.core.exception.FoundPersonException;
+import br.com.mgr.personapi.core.exception.NotFoundPersonException;
 import br.com.mgr.personapi.core.repository.PersonRepository;
 import br.com.mgr.personapi.core.usecase.CreatePersonUseCase;
 import br.com.mgr.personapi.core.usecase.SearchPersonUseCase;
 import br.com.mgr.personapi.core.usecase.imp.CreatePersonUseCaseImp;
 import br.com.mgr.personapi.core.usecase.imp.SearchPersonUseCaseImp;
 import br.com.mgr.personapi.dataprovider.mapper.PersonMapper;
+import br.com.mgr.personapi.dataprovider.model.PersonEntity;
 import br.com.mgr.personapi.service.person.imp.PersonServiceImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,14 +62,16 @@ class PersonServiceTest {
 
     @Test
     @DisplayName("Deve cadastrar pessoa e retorna os dados da pessoa cadastrada")
-    void shouldCreatedPersonEntityAndReturnPersonDto() {
+    void shouldCreatedPersonEntityAndReturnPersonDto() throws FoundPersonException, CreatePersonFailException {
 
         Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
 
         when(repository.findByCpf(Mockito.any())).thenReturn(Optional.empty());
         when(repository.save(Mockito.any())).thenReturn(person);
 
-        PersonDto personDto = personService.create(PersonMapper.personToPersonEntity(person));
+        PersonEntity personEntity = personService.create(PersonDtoMapper.personToPersonDto(person));
+        PersonDto personDto = PersonDtoMapper.personEntityToPersonDto(personEntity);
+
 
         assertThat(personDto.getFirstName()).isEqualTo(person.getFirstName());
         assertThat(personDto.getLastName()).isEqualTo(person.getLastName());
@@ -77,12 +85,13 @@ class PersonServiceTest {
 
     @Test
     @DisplayName("Deve buscar todas as pessoas e retorna os dados das pessoas cadastrada")
-    void shouldGetAllPersonEntityAndReturnPersonDto() {
+    void shouldGetAllPersonEntityAndReturnPersonDto() throws EmptyListPersonException {
 
         Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
 
         when(repository.findAll()).thenReturn(List.of(person));
-        List<PersonDto> personDtos = personService.findAll();
+        List<PersonEntity> personEntities = personService.findAll();
+        List<PersonDto> personDtos = PersonDtoMapper.personEntityToPersonDto(personEntities);
 
         assertFalse(personDtos.isEmpty());
         assertThat(personDtos.size()).isEqualTo(1);
@@ -100,12 +109,13 @@ class PersonServiceTest {
 
     @Test
     @DisplayName("Deve buscar todas as pessoas e retorna os dados das pessoas cadastrada")
-    void shouldSearchPersonEntityPerIdAndReturnPersonDto() {
+    void shouldSearchPersonEntityPerIdAndReturnPersonDto() throws NotFoundPersonException {
 
         Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
 
         when(repository.findById(any())).thenReturn(Optional.ofNullable(person));
-        PersonDto personDto = personService.findById(ID);
+        PersonEntity personEntity = personService.findById(ID);
+        PersonDto personDto = PersonDtoMapper.personEntityToPersonDto(personEntity);
 
 
         assertThat(personDto.getFirstName()).isEqualTo(person.getFirstName());
