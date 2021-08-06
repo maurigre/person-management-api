@@ -26,6 +26,7 @@
           "type": "array",
           "items": {
             "type": "object",
+            "additionalProperties": true,
             "properties": {
               "type": {
                 "enum": [
@@ -37,10 +38,12 @@
               "number": {
                 "type": "string"
               }
-            }
+            },
+            "required" : ["type","number"]
           }
         }
-      }
+      },
+      "required" : ["firstName","lastName","cpf","birthDate","phones"]
     }
   },
   "required": [
