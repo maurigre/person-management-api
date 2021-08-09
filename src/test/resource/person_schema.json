@@ -39,7 +39,7 @@
                 "type": "string"
               }
             },
-            "required" : ["type","number"]
+            "required" : ["number"]
           }
         }
       },
