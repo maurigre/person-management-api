@@ -130,4 +130,12 @@ class PersonServiceTest {
 
     }
 
+    @Test
+    @DisplayName("Deve deletar pessoa por ide retorna sucesso")
+    void shouldDeletePersonEntityByIdPerIdAndReturnsSucesso() {
+        Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
+        when(repository.findById(any())).thenReturn(Optional.ofNullable(person));
+        personService.deleteById(ID);
+    }
+
 }
