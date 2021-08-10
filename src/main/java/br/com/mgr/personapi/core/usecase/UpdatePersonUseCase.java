@@ -1,12 +1,11 @@
 package br.com.mgr.personapi.core.usecase;
 
-import br.com.mgr.personapi.dataprovider.model.PersonEntity;
+import br.com.mgr.personapi.core.entity.Person;
 
-/**
- * @author Mauri Reis
- * @since 28/07/21
- */
+import java.util.UUID;
+
+
 public interface UpdatePersonUseCase {
-    PersonEntity updateById(Long id, PersonEntity person);
+    Person updateById(Person person);
 
 }

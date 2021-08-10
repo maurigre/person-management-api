@@ -1,7 +1,9 @@
 package br.com.mgr.personapi.services.person;
 
 import br.com.mgr.personapi.core.usecase.DeletePersonUseCase;
+import br.com.mgr.personapi.core.usecase.UpdatePersonUseCase;
 import br.com.mgr.personapi.core.usecase.imp.DeletePersonUseCaseImp;
+import br.com.mgr.personapi.core.usecase.imp.UpdatePersonUseCaseImp;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper.PersonDtoMapper;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.core.entity.Person;
@@ -44,6 +46,7 @@ class PersonServiceTest {
     private CreatePersonUseCase createPersonUseCase;
     private SearchPersonUseCase searchPersonUseCase;
     private DeletePersonUseCase deletePersonUseCase;
+    private UpdatePersonUseCase updatePersonUseCase;
 
     private final UUID ID = UUID.randomUUID();
     private final String FIRST_NAME = "Alex";
@@ -59,7 +62,8 @@ class PersonServiceTest {
         this.createPersonUseCase = spy(new CreatePersonUseCaseImp(repository));
         this.searchPersonUseCase = spy(new SearchPersonUseCaseImp(repository));
         this.deletePersonUseCase = spy(new DeletePersonUseCaseImp(repository));
-        this.personService = new PersonServiceImp(createPersonUseCase, searchPersonUseCase, deletePersonUseCase);
+        this.updatePersonUseCase = spy(new UpdatePersonUseCaseImp(repository));
+        this.personService = new PersonServiceImp(createPersonUseCase, searchPersonUseCase, deletePersonUseCase, updatePersonUseCase);
     }
 
     @Test

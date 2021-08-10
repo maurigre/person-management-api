@@ -5,14 +5,7 @@ import br.com.mgr.personapi.core.entity.Person;
 import br.com.mgr.personapi.core.repository.PersonRepository;
 import br.com.mgr.personapi.dataprovider.mapper.PersonMapper;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.RepositoryDefinition;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -55,7 +48,14 @@ public class PersonDaoImp implements PersonRepository {
         return PersonMapper.personEntityToPerson(personEntity);
     }
 
+    @Override
     public void deleteById(UUID id) {
         personDao.deleteById(id);
+    }
+
+    @Override
+    public Person update(Person person) {
+        final PersonEntity personEntity = personDao.save(PersonMapper.personToPersonEntity(person));
+        return PersonMapper.personEntityToPerson(personEntity);
     }
 }
