@@ -13,8 +13,10 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class PersonDaoImp implements PersonRepository {
 
@@ -29,8 +31,22 @@ public class PersonDaoImp implements PersonRepository {
         return personDao.findById(UUID.fromString(id));
     }
 
+    @Override
+    public Optional<Person> findById(UUID id) {
+        return personDao.findById(id)
+                .map(PersonMapper::personEntityToPerson);
+    }
+
     public Optional<Person> findByCpf(String cpf) {
-        return personDao.findByCpf(cpf).map(PersonMapper::personEntityToPerson);
+        return personDao.findByCpf(cpf)
+                .map(PersonMapper::personEntityToPerson);
+    }
+
+    @Override
+    public List<Person> findAll() {
+        return personDao.findAll().stream()
+                .map(PersonMapper::personEntityToPerson)
+                .collect(Collectors.toList());
     }
 
     @Override
