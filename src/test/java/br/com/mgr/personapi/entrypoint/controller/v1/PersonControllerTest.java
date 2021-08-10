@@ -143,14 +143,16 @@ class PersonControllerTest {
     @Test
     void givenAnIdPersonWhenGetThenReturnBadRequest(){
 
+        String id = "abbb1708-f188-4d0f-acba-12a761ad5e93";
+
         RestAssured.given()
                 .contentType(APPLICATION_JSON_VALUE)
-                .pathParam("id", "abbb1708-f188-4d0f-acba-12a761ad5e93")
+                .pathParam("id", id)
                 .when()
                 .get("api/v1/peoples/{id}")
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("message", equalTo("Person not found"));
+                .body("message", equalTo("Person not found by id: "+ id));
 
     }
 
@@ -184,6 +186,49 @@ class PersonControllerTest {
                 .body("message", equalTo("Request has invalid fields"));
     }
 
+    @Test
+    void givenAnParameterPersonByIdWhenDeleteThenReturnBadRequest(){
+        String id = "abbb1708-f188-4d0f-acba-12a761ad5e93";
+
+        RestAssured.given()
+                .contentType(APPLICATION_JSON_VALUE)
+                .pathParam("id", id)
+                .when()
+                .get("api/v1/peoples/{id}")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("message", equalTo("Person not found by id: " + id));
+    }
+
+    @Test
+    void givenAnParameterPersonByIdWhenDeleteThenReturnSucesso() throws JsonProcessingException {
+
+        RestAssured.given()
+                .contentType(APPLICATION_JSON_VALUE)
+                .body(
+                        getJsonPayLoad(FIRST_NAME, LAST_NAME, CPF, BIRTH_DATE, PHONES )
+                )
+                .when()
+                .post("api/v1/peoples")
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.CREATED.value());
+
+        Optional<PersonEntity> byCpf = personDao.findByCpf(CPF);
+        UUID id = UUID.fromString("abbb1708-f188-4d0f-acba-12a761ad5e93");
+        if (byCpf.isPresent()) {
+            id = byCpf.get().getId();
+        }
+
+        RestAssured.given()
+                .contentType(APPLICATION_JSON_VALUE)
+                .pathParam("id", id)
+                .when()
+                .delete("api/v1/peoples/{id}")
+                .then()
+                .statusCode(HttpStatus.NO_CONTENT.value());
+    }
 
 
     public String getJsonPayLoad(String firstName,

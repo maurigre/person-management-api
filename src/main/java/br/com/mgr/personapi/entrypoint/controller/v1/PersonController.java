@@ -60,6 +60,12 @@ public class PersonController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @DeleteMapping(produces = APPLICATION_JSON_VALUE, value = "/{id}")
+    public ResponseEntity deleteById(@PathVariable("id") String id){
+        personService.deleteById(UUID.fromString(id));
+        return ResponseEntity.noContent().build();
+    }
+
 
     private void createSelfLink(PersonDto dto, UUID id) {
         dto.add(linkTo(methodOn(PersonController.class).findAll()).withRel("List Person"));

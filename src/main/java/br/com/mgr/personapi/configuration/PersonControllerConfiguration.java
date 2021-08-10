@@ -1,5 +1,7 @@
 package br.com.mgr.personapi.configuration;
 
+import br.com.mgr.personapi.core.usecase.DeletePersonUseCase;
+import br.com.mgr.personapi.core.usecase.imp.DeletePersonUseCaseImp;
 import br.com.mgr.personapi.entrypoint.controller.v1.PersonController;
 import br.com.mgr.personapi.core.usecase.CreatePersonUseCase;
 import br.com.mgr.personapi.core.usecase.SearchPersonUseCase;
@@ -38,8 +40,9 @@ public class PersonControllerConfiguration {
     @Bean
     public PersonService personServiceConfigration(
             CreatePersonUseCase createPersonUseCase,
-            SearchPersonUseCase searchPersonUseCase) {
-        return new PersonServiceImp( createPersonUseCase, searchPersonUseCase);
+            SearchPersonUseCase searchPersonUseCase,
+            DeletePersonUseCase deletePersonUseCase) {
+        return new PersonServiceImp( createPersonUseCase, searchPersonUseCase, deletePersonUseCase);
     }
 
     @Bean
@@ -50,6 +53,11 @@ public class PersonControllerConfiguration {
     @Bean
     public SearchPersonUseCase searchPersonUseCaseConfiguration(PersonDaoImp personDaoImp){
         return  new SearchPersonUseCaseImp(personDaoImp);
+    }
+
+    @Bean
+    public DeletePersonUseCase deletePersonUseCaseConfiguration(PersonDaoImp personDaoImp){
+        return  new DeletePersonUseCaseImp(personDaoImp);
     }
 
 }

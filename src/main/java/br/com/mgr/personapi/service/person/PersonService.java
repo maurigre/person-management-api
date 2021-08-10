@@ -13,9 +13,9 @@ import java.util.UUID;
 
 public interface PersonService {
 
-    PersonEntity create(PersonDto dto) throws FoundPersonException, CreatePersonFailException;
-    PersonEntity findById(UUID id) throws NotFoundPersonException;
-    List<PersonEntity> findAll() throws EmptyListPersonException;
+    PersonEntity create(PersonDto dto);
+    PersonEntity findById(UUID id);
+    List<PersonEntity> findAll();
     void deleteById(UUID id);
     PersonEntity updateById(UUID id, PersonDto dto);
 }

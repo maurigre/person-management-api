@@ -59,7 +59,7 @@ class SearchPersonUseCaseTest {
 
         assertThatThrownBy(() -> searchPersonUseCase.findById(ID))
                 .isInstanceOf(NotFoundPersonException.class)
-                .hasMessage("Person not found");
+                .hasMessage("Person not found by id: " + ID);
     }
 
     @Test

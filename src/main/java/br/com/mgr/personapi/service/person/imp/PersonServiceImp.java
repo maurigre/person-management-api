@@ -1,5 +1,6 @@
 package br.com.mgr.personapi.service.person.imp;
 
+import br.com.mgr.personapi.core.usecase.DeletePersonUseCase;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper.PersonDtoMapper;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.core.entity.Person;
@@ -25,10 +26,12 @@ public class PersonServiceImp implements PersonService {
 
     private CreatePersonUseCase createPersonUseCase;
     private SearchPersonUseCase searchPersonUseCase;
+    private DeletePersonUseCase deletePersonUseCase;
 
-    public PersonServiceImp(CreatePersonUseCase createPersonUseCase, SearchPersonUseCase searchPersonUseCase) {
+    public PersonServiceImp(CreatePersonUseCase createPersonUseCase, SearchPersonUseCase searchPersonUseCase, DeletePersonUseCase deletePersonUseCase) {
         this.createPersonUseCase = createPersonUseCase;
         this.searchPersonUseCase = searchPersonUseCase;
+        this.deletePersonUseCase = deletePersonUseCase;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class PersonServiceImp implements PersonService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteById(UUID id) {
-
+        deletePersonUseCase.deleteById(id);
     }
 
     @Override

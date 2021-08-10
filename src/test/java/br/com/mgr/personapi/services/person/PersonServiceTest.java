@@ -1,5 +1,7 @@
 package br.com.mgr.personapi.services.person;
 
+import br.com.mgr.personapi.core.usecase.DeletePersonUseCase;
+import br.com.mgr.personapi.core.usecase.imp.DeletePersonUseCaseImp;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper.PersonDtoMapper;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.core.entity.Person;
@@ -37,11 +39,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class PersonServiceTest {
 
-    PersonServiceImp personService;
-    //PersonDao repository;
-    PersonRepository repository;
-    CreatePersonUseCase createPersonUseCase;
+    private PersonServiceImp personService;
+    private PersonRepository repository;
+    private CreatePersonUseCase createPersonUseCase;
     private SearchPersonUseCase searchPersonUseCase;
+    private DeletePersonUseCase deletePersonUseCase;
 
     private final UUID ID = UUID.randomUUID();
     private final String FIRST_NAME = "Alex";
@@ -56,7 +58,8 @@ class PersonServiceTest {
         this.repository = spy(PersonRepository.class);
         this.createPersonUseCase = spy(new CreatePersonUseCaseImp(repository));
         this.searchPersonUseCase = spy(new SearchPersonUseCaseImp(repository));
-        this.personService = new PersonServiceImp(createPersonUseCase, searchPersonUseCase);
+        this.deletePersonUseCase = spy(new DeletePersonUseCaseImp(repository));
+        this.personService = new PersonServiceImp(createPersonUseCase, searchPersonUseCase, deletePersonUseCase);
     }
 
     @Test
@@ -125,6 +128,14 @@ class PersonServiceTest {
         assertThat(personDto.getPhones().get(0).getType()).isEqualTo(person.getPhones().get(0).getType().getDescription());
         assertThat(personDto.getPhones().get(0).getNumber()).isEqualTo(person.getPhones().get(0).getNumber());
 
+    }
+
+    @Test
+    @DisplayName("Deve deletar pessoa por ide retorna sucesso")
+    void shouldDeletePersonEntityByIdPerIdAndReturnsSucesso() {
+        Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
+        when(repository.findById(any())).thenReturn(Optional.ofNullable(person));
+        personService.deleteById(ID);
     }
 
 }

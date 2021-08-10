@@ -14,4 +14,5 @@ public interface PersonRepository {
     Optional<Person> findByCpf(String cpf);
     List<Person> findAll();
     Person save(Person person);
+    void deleteById(UUID id);
 }
