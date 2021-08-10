@@ -1,4 +1,4 @@
-package br.com.mgr.personapi.controller.v1.dto.person;
+package br.com.mgr.personapi.entrypoint.controller.v1.dto.person;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

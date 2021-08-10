@@ -1,4 +1,4 @@
-package br.com.mgr.personapi.controller.v1.dto.person;
+package br.com.mgr.personapi.entrypoint.controller.v1.dto.person;
 
 import br.com.mgr.personapi.core.entity.PhoneType;
 import org.junit.jupiter.api.DisplayName;

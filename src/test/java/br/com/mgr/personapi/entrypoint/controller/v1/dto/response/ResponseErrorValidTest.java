@@ -1,8 +1,6 @@
-package br.com.mgr.personapi.controller.v1.dto.response;
+package br.com.mgr.personapi.entrypoint.controller.v1.dto.response;
 
 
-import br.com.mgr.personapi.controller.v1.dto.response.ResponseErrorValid.ResponseErrorValidBuilder;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 

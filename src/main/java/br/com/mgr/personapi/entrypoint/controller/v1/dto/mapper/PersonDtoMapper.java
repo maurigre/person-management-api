@@ -1,11 +1,11 @@
-package br.com.mgr.personapi.controller.v1.dto.mapper;
+package br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper;
 
-import br.com.mgr.personapi.controller.v1.dto.person.PersonDto;
-import br.com.mgr.personapi.controller.v1.dto.person.PhoneDto;
 import br.com.mgr.personapi.core.entity.Person;
 import br.com.mgr.personapi.core.entity.PhoneType;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
 import br.com.mgr.personapi.dataprovider.model.PhoneEntity;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PhoneDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

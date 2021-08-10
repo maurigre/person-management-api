@@ -1,7 +1,7 @@
 package br.com.mgr.personapi.services.person;
 
-import br.com.mgr.personapi.controller.v1.dto.mapper.PersonDtoMapper;
-import br.com.mgr.personapi.controller.v1.dto.person.PersonDto;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper.PersonDtoMapper;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.core.entity.Person;
 import br.com.mgr.personapi.core.entity.Phone;
 import br.com.mgr.personapi.core.entity.PhoneType;
@@ -14,7 +14,6 @@ import br.com.mgr.personapi.core.usecase.CreatePersonUseCase;
 import br.com.mgr.personapi.core.usecase.SearchPersonUseCase;
 import br.com.mgr.personapi.core.usecase.imp.CreatePersonUseCaseImp;
 import br.com.mgr.personapi.core.usecase.imp.SearchPersonUseCaseImp;
-import br.com.mgr.personapi.dataprovider.mapper.PersonMapper;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
 import br.com.mgr.personapi.service.person.imp.PersonServiceImp;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,17 +1,11 @@
-package br.com.mgr.personapi.controller.v1;
+package br.com.mgr.personapi.entrypoint.controller.v1;
 
-import br.com.mgr.personapi.controller.v1.dto.mapper.PersonDtoMapper;
-import br.com.mgr.personapi.controller.v1.dto.person.PersonDto;
-import br.com.mgr.personapi.controller.v1.dto.response.Response;
-import br.com.mgr.personapi.core.exception.CreatePersonFailException;
-import br.com.mgr.personapi.core.exception.EmptyListPersonException;
-import br.com.mgr.personapi.core.exception.FoundPersonException;
-import br.com.mgr.personapi.core.exception.NotFoundPersonException;
-import br.com.mgr.personapi.dataprovider.mapper.PersonMapper;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper.PersonDtoMapper;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.response.Response;
 import br.com.mgr.personapi.service.person.PersonService;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

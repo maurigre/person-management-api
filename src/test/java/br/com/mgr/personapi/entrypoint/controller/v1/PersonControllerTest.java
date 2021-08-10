@@ -1,11 +1,11 @@
-package br.com.mgr.personapi.controller.v1;
+package br.com.mgr.personapi.entrypoint.controller.v1;
 
 
-import br.com.mgr.personapi.controller.v1.dto.person.PersonDto;
-import br.com.mgr.personapi.controller.v1.dto.person.PhoneDto;
 import br.com.mgr.personapi.core.entity.PhoneType;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
 import br.com.mgr.personapi.dataprovider.repository.PersonDao;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PhoneDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

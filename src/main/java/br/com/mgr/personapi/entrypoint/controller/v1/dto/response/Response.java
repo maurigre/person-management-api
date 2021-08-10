@@ -1,4 +1,4 @@
-package br.com.mgr.personapi.controller.v1.dto.response;
+package br.com.mgr.personapi.entrypoint.controller.v1.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

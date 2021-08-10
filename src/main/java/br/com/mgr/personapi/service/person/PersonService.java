@@ -1,7 +1,7 @@
 package br.com.mgr.personapi.service.person;
 
 
-import br.com.mgr.personapi.controller.v1.dto.person.PersonDto;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.core.exception.CreatePersonFailException;
 import br.com.mgr.personapi.core.exception.EmptyListPersonException;
 import br.com.mgr.personapi.core.exception.FoundPersonException;

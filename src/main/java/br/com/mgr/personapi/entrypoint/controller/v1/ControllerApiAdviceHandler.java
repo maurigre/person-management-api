@@ -1,19 +1,16 @@
-package br.com.mgr.personapi.controller.v1;
+package br.com.mgr.personapi.entrypoint.controller.v1;
 
-import br.com.mgr.personapi.controller.v1.dto.response.ResponseError;
-import br.com.mgr.personapi.controller.v1.dto.response.ResponseErrorValid;
-import br.com.mgr.personapi.controller.v1.dto.response.ResponseErrorValidField;
 import br.com.mgr.personapi.core.exception.CreatePersonFailException;
 import br.com.mgr.personapi.core.exception.EmptyListPersonException;
 import br.com.mgr.personapi.core.exception.FoundPersonException;
 import br.com.mgr.personapi.core.exception.NotFoundPersonException;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.response.ResponseError;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.response.ResponseErrorValid;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.response.ResponseErrorValidField;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.transaction.TransactionSystemException;
 import org.springframework.validation.BindException;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
