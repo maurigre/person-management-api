@@ -143,14 +143,16 @@ class PersonControllerTest {
     @Test
     void givenAnIdPersonWhenGetThenReturnBadRequest(){
 
+        String id = "abbb1708-f188-4d0f-acba-12a761ad5e93";
+
         RestAssured.given()
                 .contentType(APPLICATION_JSON_VALUE)
-                .pathParam("id", "abbb1708-f188-4d0f-acba-12a761ad5e93")
+                .pathParam("id", id)
                 .when()
                 .get("api/v1/peoples/{id}")
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("message", equalTo("Person not found"));
+                .body("message", equalTo("Person not found by id: "+ id));
 
     }
 

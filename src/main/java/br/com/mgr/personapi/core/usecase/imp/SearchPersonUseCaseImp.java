@@ -25,7 +25,7 @@ public class SearchPersonUseCaseImp implements SearchPersonUseCase {
         if (personOptional.isPresent()){
             return personOptional.get();
         }
-        throw new NotFoundPersonException();
+        throw new NotFoundPersonException(id.toString());
     }
 
     @Override

@@ -148,7 +148,7 @@ class PersonDaoImpTest {
     @Test
     @DisplayName("deve delete Person")
     public void shouldDeletePerson (){
-        personDaoImp.deleteById(ID.toString());
+        personDaoImp.deleteById(ID);
         verify(repository).deleteById(any());
     }
 

@@ -55,7 +55,7 @@ public class PersonDaoImp implements PersonRepository {
         return PersonMapper.personEntityToPerson(personEntity);
     }
 
-    public void deleteById(String id) {
-        personDao.deleteById(UUID.fromString(id));
+    public void deleteById(UUID id) {
+        personDao.deleteById(id);
     }
 }
