@@ -3,29 +3,20 @@ package br.com.mgr.personapi.controller.v1;
 
 import br.com.mgr.personapi.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.controller.v1.dto.person.PhoneDto;
-import br.com.mgr.personapi.core.entity.Phone;
 import br.com.mgr.personapi.core.entity.PhoneType;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
 import br.com.mgr.personapi.dataprovider.repository.PersonDao;
-import br.com.mgr.personapi.service.person.PersonService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
-import org.hamcrest.Matchers;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 
-import java.awt.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +24,7 @@ import java.util.UUID;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
-import static org.springframework.http.MediaType.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PersonControllerTest {
@@ -90,11 +81,6 @@ class PersonControllerTest {
                 .log()
                 .all()
                 .statusCode(HttpStatus.CREATED.value());
-
-        Optional<PersonEntity> byCpf = personDao.findByCpf(CPF);
-        if (byCpf.isPresent()) {
-            System.out.println( "PERSON: " + byCpf.get().getId());
-        }
 
         RestAssured.given()
                 .contentType(APPLICATION_JSON_VALUE)
@@ -166,6 +152,36 @@ class PersonControllerTest {
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body("message", equalTo("Person not found"));
 
+    }
+
+    @Test
+    void givenAnArgumentIdPersonInvalidWhenGetThenReturnBadRequest(){
+
+        RestAssured.given()
+                .contentType(APPLICATION_JSON_VALUE)
+                .pathParam("id", "1")
+                .when()
+                .get("api/v1/peoples/{id}")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("message", equalTo("Invalid UUID string: 1"));
+
+    }
+    @Test
+    void givenAnParameterPersonNullWhenGetThenReturnBadRequest() throws JsonProcessingException {
+
+        RestAssured.given()
+                .contentType(APPLICATION_JSON_VALUE)
+                .body(
+                        getJsonPayLoad(FIRST_NAME, LAST_NAME, CPF, null, PHONES )
+                )
+                .when()
+                .post("api/v1/peoples")
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("message", equalTo("Request has invalid fields"));
     }
 
 
