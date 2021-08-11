@@ -48,7 +48,14 @@ public class PersonDaoImp implements PersonRepository {
         return PersonMapper.personEntityToPerson(personEntity);
     }
 
+    @Override
     public void deleteById(UUID id) {
         personDao.deleteById(id);
+    }
+
+    @Override
+    public Person update(Person person) {
+        final PersonEntity personEntity = personDao.save(PersonMapper.personToPersonEntity(person));
+        return PersonMapper.personEntityToPerson(personEntity);
     }
 }

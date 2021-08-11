@@ -7,9 +7,13 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.Builder;
 import lombok.Getter;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.hateoas.RepresentationModel;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,13 +21,16 @@ import java.util.List;
 @Getter
 public class PersonDto extends RepresentationModel<PersonDto> {
 
-    @NotNull(message = "First name cannot be null ")
+    @NotEmpty(message = "First name cannot be null ")
+    @Size(min = 2, max = 100)
     private String firstName;
 
-    @NotNull(message = "Last name cannot be null ")
+    @NotEmpty(message = "Last name cannot be null ")
+    @Size(min = 2, max = 100)
     private String lastName;
 
-    @NotNull(message = "Cpf name cannot be null ")
+    @NotEmpty(message = "Cpf name cannot be null ")
+    @CPF
     private String cpf;
 
     @NotNull(message = "Date time cannot be null ")
@@ -32,6 +39,8 @@ public class PersonDto extends RepresentationModel<PersonDto> {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
+    @Valid
+    @NotEmpty
     private List<PhoneDto> phones;
 
     @Override

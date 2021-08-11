@@ -8,6 +8,7 @@ import br.com.mgr.personapi.core.exception.NotFoundPersonException;
 import br.com.mgr.personapi.core.usecase.CreatePersonUseCase;
 import br.com.mgr.personapi.core.usecase.DeletePersonUseCase;
 import br.com.mgr.personapi.core.usecase.SearchPersonUseCase;
+import br.com.mgr.personapi.core.usecase.UpdatePersonUseCase;
 import br.com.mgr.personapi.dataprovider.mapper.PersonMapper;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper.PersonDtoMapper;
@@ -27,11 +28,13 @@ public class PersonServiceImp implements PersonService {
     private CreatePersonUseCase createPersonUseCase;
     private SearchPersonUseCase searchPersonUseCase;
     private DeletePersonUseCase deletePersonUseCase;
+    private UpdatePersonUseCase updatePersonUseCase;
 
-    public PersonServiceImp(CreatePersonUseCase createPersonUseCase, SearchPersonUseCase searchPersonUseCase, DeletePersonUseCase deletePersonUseCase) {
+    public PersonServiceImp(CreatePersonUseCase createPersonUseCase, SearchPersonUseCase searchPersonUseCase, DeletePersonUseCase deletePersonUseCase, UpdatePersonUseCase updatePersonUseCase) {
         this.createPersonUseCase = createPersonUseCase;
         this.searchPersonUseCase = searchPersonUseCase;
         this.deletePersonUseCase = deletePersonUseCase;
+        this.updatePersonUseCase = updatePersonUseCase;
     }
 
     @Override
@@ -66,7 +69,9 @@ public class PersonServiceImp implements PersonService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public PersonEntity updateById(UUID id, PersonDto personDto) {
-        return null;
+        final PersonEntity personEntity = PersonDtoMapper.personDtoToPersonEntity(id, personDto);
+        final Person person = updatePersonUseCase.updateById(PersonMapper.personEntityToPerson(personEntity));
+        return PersonMapper.personToPersonEntity(person);
     }
 
 

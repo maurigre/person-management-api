@@ -11,9 +11,11 @@ import br.com.mgr.personapi.core.repository.PersonRepository;
 import br.com.mgr.personapi.core.usecase.CreatePersonUseCase;
 import br.com.mgr.personapi.core.usecase.DeletePersonUseCase;
 import br.com.mgr.personapi.core.usecase.SearchPersonUseCase;
+import br.com.mgr.personapi.core.usecase.UpdatePersonUseCase;
 import br.com.mgr.personapi.core.usecase.imp.CreatePersonUseCaseImp;
 import br.com.mgr.personapi.core.usecase.imp.DeletePersonUseCaseImp;
 import br.com.mgr.personapi.core.usecase.imp.SearchPersonUseCaseImp;
+import br.com.mgr.personapi.core.usecase.imp.UpdatePersonUseCaseImp;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper.PersonDtoMapper;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
@@ -44,6 +46,7 @@ class PersonServiceTest {
     private CreatePersonUseCase createPersonUseCase;
     private SearchPersonUseCase searchPersonUseCase;
     private DeletePersonUseCase deletePersonUseCase;
+    private UpdatePersonUseCase updatePersonUseCase;
 
     private final UUID ID = UUID.randomUUID();
     private final String FIRST_NAME = "Alex";
@@ -59,7 +62,8 @@ class PersonServiceTest {
         this.createPersonUseCase = spy(new CreatePersonUseCaseImp(repository));
         this.searchPersonUseCase = spy(new SearchPersonUseCaseImp(repository));
         this.deletePersonUseCase = spy(new DeletePersonUseCaseImp(repository));
-        this.personService = new PersonServiceImp(createPersonUseCase, searchPersonUseCase, deletePersonUseCase);
+        this.updatePersonUseCase = spy(new UpdatePersonUseCaseImp(repository));
+        this.personService = new PersonServiceImp(createPersonUseCase, searchPersonUseCase, deletePersonUseCase, updatePersonUseCase);
     }
 
     @Test
@@ -138,4 +142,26 @@ class PersonServiceTest {
         personService.deleteById(ID);
     }
 
+    @Test
+    @DisplayName("Deve atualizar pessoa e retorna os dados da pessoa atualizado")
+    void shouldUpdatePersonEntityAndReturnPersonDto() {
+
+        Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
+
+        when(repository.findById(Mockito.any())).thenReturn(Optional.ofNullable(new Person()));
+        when(repository.save(Mockito.any())).thenReturn(person);
+
+        PersonEntity personEntity = personService.updateById(UUID.randomUUID(), PersonDtoMapper.personToPersonDto(person));
+        PersonDto personDto = PersonDtoMapper.personEntityToPersonDto(personEntity);
+
+
+        assertThat(personDto.getFirstName()).isEqualTo(person.getFirstName());
+        assertThat(personDto.getLastName()).isEqualTo(person.getLastName());
+        assertThat(personDto.getCpf()).isEqualTo(person.getCpf());
+        assertThat(personDto.getBirthDate()).isEqualTo(person.getBirthDate());
+        assertThat(personDto.getPhones().get(0)).isNotNull();
+        assertThat(personDto.getPhones().get(0).getType()).isEqualTo(person.getPhones().get(0).getType().getDescription());
+        assertThat(personDto.getPhones().get(0).getNumber()).isEqualTo(person.getPhones().get(0).getNumber());
+
+    }
 }

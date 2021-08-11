@@ -8,13 +8,14 @@ import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PhoneDto;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class PersonDtoMapper {
 
     public static PersonDto personToPersonDto(Person person){
         final List<PhoneDto> phoneDtos = person.getPhones().stream()
-                .map(phone -> new PhoneDto(phone.getType().getDescription(), phone.getNumber()))
+                .map(phone -> new PhoneDto(phone.getId(),phone.getType().getDescription(), phone.getNumber()))
                 .collect(Collectors.toList());
         return PersonDto.builder()
                 .firstName(person.getFirstName())
@@ -24,15 +25,15 @@ public class PersonDtoMapper {
                 .phones(phoneDtos).build();
     }
 
-    public static PersonDto personEntityToPersonDto(PersonEntity perpersonEntityon){
-        final List<PhoneDto> phoneDtos = perpersonEntityon.getPhoneEntities().stream()
-                .map(phone -> new PhoneDto(phone.getType().getDescription(), phone.getNumber()))
+    public static PersonDto personEntityToPersonDto(PersonEntity personEntity){
+        final List<PhoneDto> phoneDtos = personEntity.getPhoneEntities().stream()
+                .map(phone -> new PhoneDto(phone.getId(),phone.getType().getDescription(), phone.getNumber()))
                 .collect(Collectors.toList());
         return PersonDto.builder()
-                .firstName(perpersonEntityon.getFirstName())
-                .lastName(perpersonEntityon.getLastName())
-                .cpf(perpersonEntityon.getCpf())
-                .birthDate(perpersonEntityon.getBirthDate())
+                .firstName(personEntity.getFirstName())
+                .lastName(personEntity.getLastName())
+                .cpf(personEntity.getCpf())
+                .birthDate(personEntity.getBirthDate())
                 .phones(phoneDtos).build();
     }
 
@@ -43,7 +44,12 @@ public class PersonDtoMapper {
     }
 
     public static PersonEntity personDtoToPersonEntity(PersonDto personDto){
+       return personDtoToPersonEntity(null, personDto);
+    }
+
+    public static PersonEntity personDtoToPersonEntity(UUID id, PersonDto personDto){
         List<PhoneEntity> phoneEntities = personDto.getPhones().stream().map(phoneDto -> PhoneEntity.builder()
+                .id(phoneDto.getId())
                 .number(phoneDto.getNumber())
                 .type(PhoneType.valueOf(phoneDto.getType()))
                 .build())
@@ -51,6 +57,7 @@ public class PersonDtoMapper {
 
 
         return PersonEntity.builder()
+                .id(id)
                 .firstName(personDto.getFirstName())
                 .lastName(personDto.getLastName())
                 .cpf(personDto.getCpf())

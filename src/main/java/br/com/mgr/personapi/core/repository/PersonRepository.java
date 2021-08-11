@@ -14,4 +14,6 @@ public interface PersonRepository {
     List<Person> findAll();
     Person save(Person person);
     void deleteById(UUID id);
+    Person update(Person person);
+
 }

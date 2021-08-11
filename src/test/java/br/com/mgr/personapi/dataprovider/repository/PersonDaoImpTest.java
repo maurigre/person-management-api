@@ -152,4 +152,25 @@ class PersonDaoImpTest {
         verify(repository).deleteById(any());
     }
 
+
+    @Test
+    @DisplayName("deve atualizar um Person e retornar a Person salva ")
+    public void shouldUpdateAnPersonAndReturnPersonSave (){
+        final PersonEntity personEntity = PersonEntity.builder()
+                //.id(ID)
+                .firstName(FIRST_NAME)
+                .lastName(LAST_NAME)
+                .cpf(CPF)
+                .birthDate(BIRTH_DATE)
+                .phoneEntities(PHONES_ENTITY)
+                .build();
+        Person person = PersonMapper.personEntityToPerson(personEntity);
+
+        when(repository.save(any())).thenReturn(personEntity);
+
+        Person save = personDaoImp.update(person);
+
+        assertThat(save).isNotNull();
+
+    }
 }

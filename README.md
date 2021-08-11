@@ -46,7 +46,6 @@ implementando suas interfaces.
 camada trata os dados que o usuário envia processa utilizando os `use cases`
 do `core` e trata seu retorno.
 
-A idéia de utilizar o `Clean Architecture` é para tornar nossos sistemas
-manutenível, testável e flexível a alterações drásticas, atravéz dessa estrutura
+A idéia de utilizar o `Clean Architecture` é para tornar o testável e flexível a alterações drásticas, atravéz dessa estrutura
 também temos um ganho ao lidarmos com várias pessoas alterando o mesmo código; 
 

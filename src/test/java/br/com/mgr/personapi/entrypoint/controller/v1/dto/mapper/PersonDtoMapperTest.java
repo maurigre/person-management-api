@@ -60,7 +60,7 @@ class PersonDtoMapperTest {
     @Test
     @DisplayName("Deve receber objeto PersoDto and retornar objeto PersonEntity")
     public void shouldReceivePersonDtoAndReturnPersonEntity(){
-        PhoneDto phoneDto = new PhoneDto(PHONES.get(0).getType().getDescription(), PHONES.get(0).getNumber());
+        PhoneDto phoneDto = new PhoneDto(PHONES.get(0).getId(), PHONES.get(0).getType().getDescription(), PHONES.get(0).getNumber());
         PersonDto personDto = PersonDto.builder()
                 .firstName(FIRST_NAME)
                 .lastName(LAST_NAME)

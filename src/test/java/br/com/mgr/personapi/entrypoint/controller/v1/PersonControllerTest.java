@@ -35,9 +35,9 @@ class PersonControllerTest {
 
     private final String FIRST_NAME = "Alex";
     private final String LAST_NAME = "Medeiros";
-    private final String CPF = "44444444444";
+    private final String CPF = "74859661036";
     private final LocalDate BIRTH_DATE = LocalDate.of(2019, 12, 01);
-    private final List<PhoneDto> PHONES =  List.of(new PhoneDto(PhoneType.COMMERCIAL.getDescription(), "16999994444"));
+    private final List<PhoneDto> PHONES =  List.of(new PhoneDto(null, PhoneType.COMMERCIAL.getDescription(), "16999994444"));
 
     @Autowired
     private PersonDao personDao;
@@ -230,6 +230,55 @@ class PersonControllerTest {
                 .statusCode(HttpStatus.NO_CONTENT.value());
     }
 
+    @Test
+    void givenAnParameterPersonByIdWhenUpdateThenReturnBadRequest() throws JsonProcessingException {
+        String id = "abbb1708-f188-4d0f-acba-12a761ad5e93";
+
+        RestAssured.given()
+                .contentType(APPLICATION_JSON_VALUE)
+                .pathParam("id", id)
+                .body(
+                        getJsonPayLoad(FIRST_NAME, LAST_NAME, CPF, BIRTH_DATE, PHONES )
+                )
+                .when()
+                .put("api/v1/peoples/{id}")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("message", equalTo("Person not found by id: " + id));
+    }
+
+    @Test
+    void givenAnParameterPersonByIdWhenUpdateThenReturnSucesso() throws JsonProcessingException {
+
+        RestAssured.given()
+                .contentType(APPLICATION_JSON_VALUE)
+                .body(
+                        getJsonPayLoad(FIRST_NAME, LAST_NAME, CPF, BIRTH_DATE, PHONES )
+                )
+                .when()
+                .post("api/v1/peoples")
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.CREATED.value());
+
+        Optional<PersonEntity> byCpf = personDao.findByCpf(CPF);
+        UUID id = UUID.fromString("abbb1708-f188-4d0f-acba-12a761ad5e93");
+        if (byCpf.isPresent()) {
+            id = byCpf.get().getId();
+        }
+
+        RestAssured.given()
+                .contentType(APPLICATION_JSON_VALUE)
+                .pathParam("id", id)
+                .body(
+                        getJsonPayLoad("Alfredo", LAST_NAME, CPF, BIRTH_DATE, PHONES )
+                )
+                .when()
+                .put("api/v1/peoples/{id}")
+                .then()
+                .statusCode(HttpStatus.OK.value());
+    }
 
     public String getJsonPayLoad(String firstName,
                                  String lastName,

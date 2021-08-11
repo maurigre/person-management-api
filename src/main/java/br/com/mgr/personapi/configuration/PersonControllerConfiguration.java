@@ -3,9 +3,11 @@ package br.com.mgr.personapi.configuration;
 import br.com.mgr.personapi.core.usecase.CreatePersonUseCase;
 import br.com.mgr.personapi.core.usecase.DeletePersonUseCase;
 import br.com.mgr.personapi.core.usecase.SearchPersonUseCase;
+import br.com.mgr.personapi.core.usecase.UpdatePersonUseCase;
 import br.com.mgr.personapi.core.usecase.imp.CreatePersonUseCaseImp;
 import br.com.mgr.personapi.core.usecase.imp.DeletePersonUseCaseImp;
 import br.com.mgr.personapi.core.usecase.imp.SearchPersonUseCaseImp;
+import br.com.mgr.personapi.core.usecase.imp.UpdatePersonUseCaseImp;
 import br.com.mgr.personapi.dataprovider.repository.PersonDao;
 import br.com.mgr.personapi.dataprovider.repository.PersonDaoImp;
 import br.com.mgr.personapi.entrypoint.controller.v1.PersonController;
@@ -41,8 +43,9 @@ public class PersonControllerConfiguration {
     public PersonService personServiceConfigration(
             CreatePersonUseCase createPersonUseCase,
             SearchPersonUseCase searchPersonUseCase,
-            DeletePersonUseCase deletePersonUseCase) {
-        return new PersonServiceImp( createPersonUseCase, searchPersonUseCase, deletePersonUseCase);
+            DeletePersonUseCase deletePersonUseCase,
+            UpdatePersonUseCase updatePersonUseCase) {
+        return new PersonServiceImp( createPersonUseCase, searchPersonUseCase, deletePersonUseCase, updatePersonUseCase);
     }
 
     @Bean
@@ -58,6 +61,11 @@ public class PersonControllerConfiguration {
     @Bean
     public DeletePersonUseCase deletePersonUseCaseConfiguration(PersonDaoImp personDaoImp){
         return  new DeletePersonUseCaseImp(personDaoImp);
+    }
+
+    @Bean
+    public UpdatePersonUseCase updatePersonUseCaseConfiguration(PersonDaoImp personDaoImp){
+        return  new UpdatePersonUseCaseImp(personDaoImp);
     }
 
 }
