@@ -1,12 +1,8 @@
 package br.com.mgr.personapi.service.person;
 
 
-import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
-import br.com.mgr.personapi.core.exception.CreatePersonFailException;
-import br.com.mgr.personapi.core.exception.EmptyListPersonException;
-import br.com.mgr.personapi.core.exception.FoundPersonException;
-import br.com.mgr.personapi.core.exception.NotFoundPersonException;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 
 import java.util.List;
 import java.util.UUID;

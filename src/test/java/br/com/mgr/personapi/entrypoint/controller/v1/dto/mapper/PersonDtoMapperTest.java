@@ -1,12 +1,12 @@
 package br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper;
 
-import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
-import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PhoneDto;
 import br.com.mgr.personapi.core.entity.Person;
 import br.com.mgr.personapi.core.entity.Phone;
 import br.com.mgr.personapi.core.entity.PhoneType;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
 import br.com.mgr.personapi.dataprovider.model.PhoneEntity;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PhoneDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

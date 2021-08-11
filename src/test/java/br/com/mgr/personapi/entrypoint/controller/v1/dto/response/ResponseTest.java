@@ -1,8 +1,8 @@
 package br.com.mgr.personapi.entrypoint.controller.v1.dto.response;
 
+import br.com.mgr.personapi.core.entity.PhoneType;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PhoneDto;
-import br.com.mgr.personapi.core.entity.PhoneType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

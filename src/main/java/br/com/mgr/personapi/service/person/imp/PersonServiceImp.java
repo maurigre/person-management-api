@@ -1,17 +1,17 @@
 package br.com.mgr.personapi.service.person.imp;
 
-import br.com.mgr.personapi.core.usecase.DeletePersonUseCase;
-import br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper.PersonDtoMapper;
-import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.core.entity.Person;
 import br.com.mgr.personapi.core.exception.CreatePersonFailException;
 import br.com.mgr.personapi.core.exception.EmptyListPersonException;
 import br.com.mgr.personapi.core.exception.FoundPersonException;
 import br.com.mgr.personapi.core.exception.NotFoundPersonException;
 import br.com.mgr.personapi.core.usecase.CreatePersonUseCase;
+import br.com.mgr.personapi.core.usecase.DeletePersonUseCase;
 import br.com.mgr.personapi.core.usecase.SearchPersonUseCase;
 import br.com.mgr.personapi.dataprovider.mapper.PersonMapper;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper.PersonDtoMapper;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.service.person.PersonService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
