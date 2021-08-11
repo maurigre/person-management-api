@@ -16,8 +16,8 @@
 	<properties>
 		<java.version>13</java.version>
 		<jacoco.version>0.8.6</jacoco.version>
-		<jacoco.coverage.line>0.9</jacoco.coverage.line>
-		<jacoco.branch.coverage>0.9</jacoco.branch.coverage>
+		<jacoco.coverage.line>1.0</jacoco.coverage.line>
+		<jacoco.branch.coverage>1.0</jacoco.branch.coverage>
 		<coverage.excluded.code></coverage.excluded.code>
 	</properties>
 	<dependencies>

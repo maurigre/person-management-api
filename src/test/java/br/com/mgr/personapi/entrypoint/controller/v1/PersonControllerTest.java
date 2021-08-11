@@ -230,6 +230,55 @@ class PersonControllerTest {
                 .statusCode(HttpStatus.NO_CONTENT.value());
     }
 
+    @Test
+    void givenAnParameterPersonByIdWhenUpdateThenReturnBadRequest() throws JsonProcessingException {
+        String id = "abbb1708-f188-4d0f-acba-12a761ad5e93";
+
+        RestAssured.given()
+                .contentType(APPLICATION_JSON_VALUE)
+                .pathParam("id", id)
+                .body(
+                        getJsonPayLoad(FIRST_NAME, LAST_NAME, CPF, BIRTH_DATE, PHONES )
+                )
+                .when()
+                .put("api/v1/peoples/{id}")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("message", equalTo("Person not found by id: " + id));
+    }
+
+    @Test
+    void givenAnParameterPersonByIdWhenUpdateThenReturnSucesso() throws JsonProcessingException {
+
+        RestAssured.given()
+                .contentType(APPLICATION_JSON_VALUE)
+                .body(
+                        getJsonPayLoad(FIRST_NAME, LAST_NAME, CPF, BIRTH_DATE, PHONES )
+                )
+                .when()
+                .post("api/v1/peoples")
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.CREATED.value());
+
+        Optional<PersonEntity> byCpf = personDao.findByCpf(CPF);
+        UUID id = UUID.fromString("abbb1708-f188-4d0f-acba-12a761ad5e93");
+        if (byCpf.isPresent()) {
+            id = byCpf.get().getId();
+        }
+
+        RestAssured.given()
+                .contentType(APPLICATION_JSON_VALUE)
+                .pathParam("id", id)
+                .body(
+                        getJsonPayLoad("Alfredo", LAST_NAME, CPF, BIRTH_DATE, PHONES )
+                )
+                .when()
+                .put("api/v1/peoples/{id}")
+                .then()
+                .statusCode(HttpStatus.OK.value());
+    }
 
     public String getJsonPayLoad(String firstName,
                                  String lastName,

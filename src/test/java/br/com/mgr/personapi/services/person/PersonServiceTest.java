@@ -142,4 +142,26 @@ class PersonServiceTest {
         personService.deleteById(ID);
     }
 
+    @Test
+    @DisplayName("Deve atualizar pessoa e retorna os dados da pessoa atualizado")
+    void shouldUpdatePersonEntityAndReturnPersonDto() {
+
+        Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
+
+        when(repository.findById(Mockito.any())).thenReturn(Optional.ofNullable(new Person()));
+        when(repository.save(Mockito.any())).thenReturn(person);
+
+        PersonEntity personEntity = personService.updateById(UUID.randomUUID(), PersonDtoMapper.personToPersonDto(person));
+        PersonDto personDto = PersonDtoMapper.personEntityToPersonDto(personEntity);
+
+
+        assertThat(personDto.getFirstName()).isEqualTo(person.getFirstName());
+        assertThat(personDto.getLastName()).isEqualTo(person.getLastName());
+        assertThat(personDto.getCpf()).isEqualTo(person.getCpf());
+        assertThat(personDto.getBirthDate()).isEqualTo(person.getBirthDate());
+        assertThat(personDto.getPhones().get(0)).isNotNull();
+        assertThat(personDto.getPhones().get(0).getType()).isEqualTo(person.getPhones().get(0).getType().getDescription());
+        assertThat(personDto.getPhones().get(0).getNumber()).isEqualTo(person.getPhones().get(0).getNumber());
+
+    }
 }
