@@ -1,8 +1,8 @@
 package br.com.mgr.personapi.entrypoint.controller.v1.dto.response;
 
+import br.com.mgr.personapi.core.entity.PhoneType;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PhoneDto;
-import br.com.mgr.personapi.core.entity.PhoneType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ public class ResponseTest{
     private final String LAST_NAME = "Reis";
     private final String CPF = "11111111111";
     private final LocalDate BIRTH_DATE = LocalDate.of(2019, 12, 01);
-    private final List<PhoneDto> PHONES =  List.of(new PhoneDto(PhoneType.COMMERCIAL.getDescription(), "16999994444"));
+    private final List<PhoneDto> PHONES =  List.of(new PhoneDto(1L, PhoneType.COMMERCIAL.getDescription(), "16999994444"));
 
 
     @Test

@@ -1,12 +1,12 @@
 package br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper;
 
-import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
-import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PhoneDto;
 import br.com.mgr.personapi.core.entity.Person;
 import br.com.mgr.personapi.core.entity.Phone;
 import br.com.mgr.personapi.core.entity.PhoneType;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
 import br.com.mgr.personapi.dataprovider.model.PhoneEntity;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PhoneDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -60,7 +60,7 @@ class PersonDtoMapperTest {
     @Test
     @DisplayName("Deve receber objeto PersoDto and retornar objeto PersonEntity")
     public void shouldReceivePersonDtoAndReturnPersonEntity(){
-        PhoneDto phoneDto = new PhoneDto(PHONES.get(0).getType().getDescription(), PHONES.get(0).getNumber());
+        PhoneDto phoneDto = new PhoneDto(PHONES.get(0).getId(), PHONES.get(0).getType().getDescription(), PHONES.get(0).getNumber());
         PersonDto personDto = PersonDto.builder()
                 .firstName(FIRST_NAME)
                 .lastName(LAST_NAME)

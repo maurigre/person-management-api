@@ -7,7 +7,6 @@ import br.com.mgr.personapi.core.entity.PhoneType;
 import br.com.mgr.personapi.dataprovider.mapper.PersonMapper;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
 import br.com.mgr.personapi.dataprovider.model.PhoneEntity;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

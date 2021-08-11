@@ -14,10 +14,10 @@
 	<name>personapi</name>
 	<description>Persona API project</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>13</java.version>
 		<jacoco.version>0.8.6</jacoco.version>
-		<jacoco.coverage.line>0.5</jacoco.coverage.line>
-		<jacoco.branch.coverage>1.0</jacoco.branch.coverage>
+		<jacoco.coverage.line>0.9</jacoco.coverage.line>
+		<jacoco.branch.coverage>0.9</jacoco.branch.coverage>
 		<coverage.excluded.code></coverage.excluded.code>
 	</properties>
 	<dependencies>
@@ -147,11 +147,11 @@
 											<value>COVEREDRATIO</value>
 											<minimum>${jacoco.coverage.line}</minimum>
 										</limit>
-	<!--									<limit>
+										<limit>
 											<counter>BRANCH</counter>
 											<value>COVEREDRATIO</value>
 											<minimum>${jacoco.branch.coverage}</minimum>
-										</limit>-->
+										</limit>
 									</limits>
 								</rule>
 							</rules>

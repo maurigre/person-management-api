@@ -8,10 +8,6 @@ import br.com.mgr.personapi.core.exception.CreatePersonFailException;
 import br.com.mgr.personapi.core.exception.FoundPersonException;
 import br.com.mgr.personapi.core.repository.PersonRepository;
 import br.com.mgr.personapi.core.usecase.imp.CreatePersonUseCaseImp;
-import br.com.mgr.personapi.dataprovider.mapper.PersonMapper;
-import br.com.mgr.personapi.dataprovider.model.PersonEntity;
-import br.com.mgr.personapi.dataprovider.model.PhoneEntity;
-import br.com.mgr.personapi.dataprovider.repository.PersonDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +20,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 

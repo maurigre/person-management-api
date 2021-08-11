@@ -14,7 +14,7 @@ class PhoneDtoTest {
     @Test
     @DisplayName("deve instancia do objeto PhoneDto atraves do construtor")
     public void shouldInstanceObjectThroughConstructor () {
-        PhoneDto phoneDto = new PhoneDto(TYPE.getDescription(), NUMBER);
+        PhoneDto phoneDto = new PhoneDto(1L, TYPE.getDescription(), NUMBER);
 
         assertThat(phoneDto).isNotNull();
         assertThat(phoneDto.toString()).isNotEmpty();

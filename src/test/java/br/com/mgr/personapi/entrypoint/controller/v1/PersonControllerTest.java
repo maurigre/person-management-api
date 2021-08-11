@@ -35,9 +35,9 @@ class PersonControllerTest {
 
     private final String FIRST_NAME = "Alex";
     private final String LAST_NAME = "Medeiros";
-    private final String CPF = "44444444444";
+    private final String CPF = "74859661036";
     private final LocalDate BIRTH_DATE = LocalDate.of(2019, 12, 01);
-    private final List<PhoneDto> PHONES =  List.of(new PhoneDto(PhoneType.COMMERCIAL.getDescription(), "16999994444"));
+    private final List<PhoneDto> PHONES =  List.of(new PhoneDto(null, PhoneType.COMMERCIAL.getDescription(), "16999994444"));
 
     @Autowired
     private PersonDao personDao;

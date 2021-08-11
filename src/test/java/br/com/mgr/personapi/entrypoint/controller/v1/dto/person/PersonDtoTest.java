@@ -15,7 +15,7 @@ class PersonDtoTest {
     private final String LAST_NAME = "Reis";
     private final String CPF = "11111111111";
     private final LocalDate BIRTH_DATE = LocalDate.of(2019, 12, 01);
-    private final List<PhoneDto> PHONES =  List.of(new PhoneDto(PhoneType.COMMERCIAL.getDescription(), "16999994444"));
+    private final List<PhoneDto> PHONES =  List.of(new PhoneDto(1L, PhoneType.COMMERCIAL.getDescription(), "16999994444"));
 
     @Test
     @DisplayName("deve instancia do objeto PersonDto atraves do construtor")

@@ -1,11 +1,5 @@
 package br.com.mgr.personapi.services.person;
 
-import br.com.mgr.personapi.core.usecase.DeletePersonUseCase;
-import br.com.mgr.personapi.core.usecase.UpdatePersonUseCase;
-import br.com.mgr.personapi.core.usecase.imp.DeletePersonUseCaseImp;
-import br.com.mgr.personapi.core.usecase.imp.UpdatePersonUseCaseImp;
-import br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper.PersonDtoMapper;
-import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.core.entity.Person;
 import br.com.mgr.personapi.core.entity.Phone;
 import br.com.mgr.personapi.core.entity.PhoneType;
@@ -15,10 +9,16 @@ import br.com.mgr.personapi.core.exception.FoundPersonException;
 import br.com.mgr.personapi.core.exception.NotFoundPersonException;
 import br.com.mgr.personapi.core.repository.PersonRepository;
 import br.com.mgr.personapi.core.usecase.CreatePersonUseCase;
+import br.com.mgr.personapi.core.usecase.DeletePersonUseCase;
 import br.com.mgr.personapi.core.usecase.SearchPersonUseCase;
+import br.com.mgr.personapi.core.usecase.UpdatePersonUseCase;
 import br.com.mgr.personapi.core.usecase.imp.CreatePersonUseCaseImp;
+import br.com.mgr.personapi.core.usecase.imp.DeletePersonUseCaseImp;
 import br.com.mgr.personapi.core.usecase.imp.SearchPersonUseCaseImp;
+import br.com.mgr.personapi.core.usecase.imp.UpdatePersonUseCaseImp;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper.PersonDtoMapper;
+import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.service.person.imp.PersonServiceImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

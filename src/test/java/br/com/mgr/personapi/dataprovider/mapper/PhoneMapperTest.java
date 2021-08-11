@@ -1,16 +1,10 @@
 package br.com.mgr.personapi.dataprovider.mapper;
 
-import br.com.mgr.personapi.core.entity.Person;
 import br.com.mgr.personapi.core.entity.Phone;
 import br.com.mgr.personapi.core.entity.PhoneType;
-import br.com.mgr.personapi.dataprovider.model.PersonEntity;
 import br.com.mgr.personapi.dataprovider.model.PhoneEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -9,7 +9,6 @@ import br.com.mgr.personapi.core.usecase.SearchPersonUseCase;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class SearchPersonUseCaseImp implements SearchPersonUseCase {
 
