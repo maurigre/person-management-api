@@ -7,7 +7,6 @@ import br.com.mgr.personapi.entrypoint.controller.v1.dto.response.Response;
 import br.com.mgr.personapi.service.person.PersonService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.RepositoryDefinition;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class PersonController {
 
     static final String VERSION = "/v1";
-    static final String PATH = VERSION + "/peoples";
+    static final String PATH = VERSION + "/people";
 
     private final PersonService personService;
 
