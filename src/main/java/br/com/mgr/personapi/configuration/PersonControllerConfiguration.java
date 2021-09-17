@@ -9,11 +9,6 @@ import br.com.mgr.personapi.entrypoint.controller.v1.PersonController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @author Mauri Reis
- * @since 29/07/21
- */
-
 @Configuration
 public class PersonControllerConfiguration {
 
