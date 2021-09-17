@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class HandleControllerConfiguration {
 
     @Bean
-    public ControllerApiAdviceHandler handleControllerConfigration() {
+    public ControllerApiAdviceHandler handleControllerConfig() {
         return new ControllerApiAdviceHandler();
 
     }

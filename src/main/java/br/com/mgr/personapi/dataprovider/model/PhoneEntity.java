@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "phones")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -22,6 +23,9 @@ public class PhoneEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PhoneType type;
+
+    @Column(nullable = false)
+    private String ddd;
 
     @Column(nullable = false)
     private String number;

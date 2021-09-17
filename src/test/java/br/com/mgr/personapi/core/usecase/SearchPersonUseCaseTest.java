@@ -3,13 +3,12 @@ package br.com.mgr.personapi.core.usecase;
 import br.com.mgr.personapi.core.entity.Person;
 import br.com.mgr.personapi.core.entity.Phone;
 import br.com.mgr.personapi.core.entity.PhoneType;
+import br.com.mgr.personapi.core.entity.vo.BirthDate;
+import br.com.mgr.personapi.core.entity.vo.Cpf;
 import br.com.mgr.personapi.core.exception.EmptyListPersonException;
 import br.com.mgr.personapi.core.exception.NotFoundPersonException;
 import br.com.mgr.personapi.core.repository.PersonRepository;
-import br.com.mgr.personapi.core.usecase.imp.SearchPersonUseCaseImp;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
@@ -25,10 +24,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-/**
- * @author Mauri Reis
- * @since 28/07/21
- */
+
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SearchPersonUseCaseTest {
 
 
@@ -38,14 +36,24 @@ class SearchPersonUseCaseTest {
     private final UUID ID = UUID.randomUUID();
     private final String FIRST_NAME = "Alex";
     private final String LAST_NAME = "Medeiros";
-    private final String CPF = "11111111111";
-    private final LocalDate BIRTH_DATE = LocalDate.of(2019, 12, 01);
-    private final List<Phone> PHONES =  List.of(new Phone(1L, PhoneType.COMMERCIAL, "16999994444"));
+    private final Cpf CPF = Cpf.valueOf("283.971.160-52");
+    private final BirthDate BIRTH_DATE = BirthDate.valueOf(LocalDate.of(2019, 12, 01));
+    private Phone PHONE;
+
+    @BeforeAll
+    void init() {
+        this.PHONE = Phone.builder()
+                .id(1L)
+                .type(PhoneType.COMMERCIAL.getDescription())
+                .ddd("16")
+                .number("999994444")
+                .build();
+    }
 
     @BeforeEach
     void setUp() {
         this.repository = spy(PersonRepository.class);
-        this.searchPersonUseCase = new SearchPersonUseCaseImp(repository);
+        this.searchPersonUseCase = new SearchPersonUseCase(repository);
     }
 
     @Test
@@ -74,7 +82,14 @@ class SearchPersonUseCaseTest {
     @DisplayName("Deve buscar a pessoa por id e retorna os dados da pessoa cadastrada")
     void shouldSearchPersonPerIdAndReturnPerson() throws NotFoundPersonException {
 
-        Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
+        final Person person = Person.builder()
+                .id(ID)
+                .firstName(FIRST_NAME)
+                .lastName(LAST_NAME)
+                .cpf(CPF)
+                .birthDate(BIRTH_DATE)
+                .addPhone(PHONE)
+                .build();
 
         when(repository.findById(Mockito.any())).thenReturn(Optional.ofNullable(person));
 
@@ -101,7 +116,14 @@ class SearchPersonUseCaseTest {
     @DisplayName("Deve buscar lista de pessoas e retorna a lista de pessoas cadastradas")
     void shouldSearchAllPersonAndReturnListPerson() throws EmptyListPersonException {
 
-        Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
+        final Person person = Person.builder()
+                .id(ID)
+                .firstName(FIRST_NAME)
+                .lastName(LAST_NAME)
+                .cpf(CPF)
+                .birthDate(BIRTH_DATE)
+                .addPhone(PHONE)
+                .build();
 
         when(repository.findAll()).thenReturn(List.of(person));
 

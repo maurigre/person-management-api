@@ -105,7 +105,8 @@
 				<version>${jacoco.version}</version>
 				<configuration>
 					<excludes>
-						<exclude>**/*Config.*</exclude>
+						<exclude>**/configuration/*</exclude>
+						<exclude>**/core/common/*</exclude>
 						<exclude>**/PersonapiApplication*</exclude>
 						<exclude>${coverage.excluded.code}</exclude>
 					</excludes>

@@ -1,6 +1,6 @@
 package br.com.mgr.personapi.core.entity;
 
-public enum PhoneType {
+public enum PhoneType  {
 
     HOME("HOME"),
     MOBILE("MOBILE"),
@@ -10,6 +10,15 @@ public enum PhoneType {
 
     public String getDescription() {
         return description;
+    }
+
+    public static boolean isValid(String descriptions ) {
+        for (PhoneType phoneType: values()){
+            if (phoneType.getDescription().equals(descriptions)){
+                return true;
+            }
+        }
+        return false;
     }
 
     PhoneType(String description) {

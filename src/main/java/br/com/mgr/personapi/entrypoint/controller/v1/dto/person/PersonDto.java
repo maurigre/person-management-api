@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -19,7 +20,10 @@ import java.util.List;
 
 @Builder
 @Getter
+@ToString
 public class PersonDto extends RepresentationModel<PersonDto> {
+
+    private String id;
 
     @NotEmpty(message = "First name cannot be null ")
     @Size(min = 2, max = 100)
@@ -43,14 +47,4 @@ public class PersonDto extends RepresentationModel<PersonDto> {
     @NotEmpty
     private List<PhoneDto> phones;
 
-    @Override
-    public String toString() {
-        return "PersonDto{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", birthDate=" + birthDate +
-                ", phones=" + phones +
-                '}';
-    }
 }
