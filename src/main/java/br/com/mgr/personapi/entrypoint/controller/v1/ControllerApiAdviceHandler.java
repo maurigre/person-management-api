@@ -46,16 +46,16 @@ public class ControllerApiAdviceHandler  extends ResponseEntityExceptionHandler 
             RuntimeException.class
     })
     public ResponseError customHandleBadRequest(RuntimeException ex) {
-        return getResponseError(ex, HttpStatus.BAD_REQUEST);
+        return getResponseError(ex);
     }
 
 
-    private ResponseError getResponseError(Exception ex, HttpStatus status) {
+    private ResponseError getResponseError(Exception ex) {
         return ResponseError.builder()
                 .timestamp(LocalDateTime.now())
                 .message(ex.getMessage())
-                .code(status.value())
-                .status(status.getReasonPhrase())
+                .code(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.BAD_REQUEST.getReasonPhrase())
                 .build();
     }
 

@@ -1,10 +1,13 @@
 package br.com.mgr.personapi.entrypoint.controller.v1;
 
-import br.com.mgr.personapi.dataprovider.model.PersonEntity;
+import br.com.mgr.personapi.core.entity.Person;
+import br.com.mgr.personapi.core.usecase.CreatePersonUseCase;
+import br.com.mgr.personapi.core.usecase.DeletePersonUseCase;
+import br.com.mgr.personapi.core.usecase.SearchPersonUseCase;
+import br.com.mgr.personapi.core.usecase.UpdatePersonUseCase;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.mapper.PersonDtoMapper;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.response.Response;
-import br.com.mgr.personapi.service.person.PersonService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,23 +31,28 @@ public class PersonController {
     static final String VERSION = "/v1";
     static final String PATH = VERSION + "/people";
 
-    private final PersonService personService;
+    private final CreatePersonUseCase createPersonUseCase;
+    private final SearchPersonUseCase searchPersonUseCase;
+    private final DeletePersonUseCase deletePersonUseCase;
+    private final UpdatePersonUseCase updatePersonUseCase;
+
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Response<PersonDto>> create(@RequestBody @Valid PersonDto personDto) {
-        final PersonEntity personEntity = personService.create(personDto);
-        final PersonDto dto = PersonDtoMapper.personEntityToPersonDto(personEntity);
-        createSelfLink(dto, personEntity.getId());
+        final Person person = createPersonUseCase.create(PersonDtoMapper.personDtoToPerson(personDto));
+        final PersonDto dto = PersonDtoMapper.personToPersonDto(person);
+        createSelfLink(dto, dto.getId());
         Response<PersonDto> response = new Response<>();
         response.setData(dto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Response<List<PersonDto>>> findAll() {
-        final List<PersonEntity> personEntities = personService.findAll();
+        final List<Person> people = searchPersonUseCase.findAll();
         final List<PersonDto> dtos = new ArrayList<>();
-        createSelfLink(personEntities, dtos);
+        createSelfLink(people, dtos);
         Response<List<PersonDto>> response = new Response<>();
         response.setData(dtos);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -52,42 +60,45 @@ public class PersonController {
 
     @GetMapping(produces = APPLICATION_JSON_VALUE, value = "/{id}")
     public ResponseEntity<Response<PersonDto>> findById(@PathVariable("id")  String id ) {
-        final PersonEntity personEntity = personService.findById(UUID.fromString(id));
-        return getResponseResponseEntity(personEntity);
+        Person person = searchPersonUseCase.findById(UUID.fromString(id));
+        return getResponseResponseEntity(person);
     }
 
     @DeleteMapping(produces = APPLICATION_JSON_VALUE, value = "/{id}")
     public ResponseEntity deleteById(@PathVariable("id") String id){
-        personService.deleteById(UUID.fromString(id));
+        deletePersonUseCase.deleteById(UUID.fromString(id));
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(produces = APPLICATION_JSON_VALUE, value = "/{id}")
     public ResponseEntity<Response<PersonDto>> updateById(@PathVariable("id") String id,
                                      @RequestBody @Valid PersonDto personDto){
-        final PersonEntity personEntity = personService.updateById(UUID.fromString(id), personDto);
-        return getResponseResponseEntity(personEntity);
+        Person person = updatePersonUseCase.updateById(
+                UUID.fromString(id),
+                PersonDtoMapper.personDtoToPerson(personDto)
+        );
+        return getResponseResponseEntity(person);
     }
 
-    private ResponseEntity<Response<PersonDto>> getResponseResponseEntity(PersonEntity personEntity) {
-        final PersonDto dto = PersonDtoMapper.personEntityToPersonDto(personEntity);
-        createSelfLink(dto, personEntity.getId());
+    private ResponseEntity<Response<PersonDto>> getResponseResponseEntity(Person person) {
+       final PersonDto dto = PersonDtoMapper.personToPersonDto(person);
+        createSelfLink(dto, dto.getId());
         Response<PersonDto> response = new Response<>();
         response.setData(dto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    private void createSelfLink(PersonDto dto, UUID id) {
-        dto.add(linkTo(methodOn(PersonController.class).findAll()).withRel("List Person").withType("GET"));
-        dto.add(linkTo(methodOn(PersonController.class).findById(id.toString())).withRel("Person").withType("GET"));
-        dto.add(linkTo(methodOn(PersonController.class).updateById(id.toString(), dto)).withRel("Update Person").withType("PUT"));
-        dto.add(linkTo(methodOn(PersonController.class).deleteById(id.toString())).withRel("Delete Person").withType("DELETE"));
+    private void createSelfLink(PersonDto dto, String id) {
+       dto.add(linkTo(methodOn(PersonController.class).findAll()).withRel("List Person").withType("GET"));
+        dto.add(linkTo(methodOn(PersonController.class).findById(id)).withRel("Person").withType("GET"));
+        dto.add(linkTo(methodOn(PersonController.class).updateById(id, dto)).withRel("Update Person").withType("PUT"));
+        dto.add(linkTo(methodOn(PersonController.class).deleteById(id)).withRel("Delete Person").withType("DELETE"));
     }
 
-    private void createSelfLink(List<PersonEntity> personEntities, List<PersonDto> dtos) {
-        for (PersonEntity person : personEntities){
-            PersonDto dto = PersonDtoMapper.personEntityToPersonDto(person);
-            createSelfLink(dto, person.getId());
+    private void createSelfLink(List<Person> people, List<PersonDto> dtos) {
+        for (Person person : people){
+            PersonDto dto = PersonDtoMapper.personToPersonDto(person);
+            createSelfLink(dto, person.getId().toString());//TODO rever ID
             dtos.add(dto);
         }
     }

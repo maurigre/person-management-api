@@ -4,26 +4,25 @@ package br.com.mgr.personapi.core.usecase;
 import br.com.mgr.personapi.core.entity.Person;
 import br.com.mgr.personapi.core.entity.Phone;
 import br.com.mgr.personapi.core.entity.PhoneType;
+import br.com.mgr.personapi.core.entity.vo.BirthDate;
+import br.com.mgr.personapi.core.entity.vo.Cpf;
 import br.com.mgr.personapi.core.exception.CreatePersonFailException;
 import br.com.mgr.personapi.core.exception.FoundPersonException;
 import br.com.mgr.personapi.core.repository.PersonRepository;
-import br.com.mgr.personapi.core.usecase.imp.CreatePersonUseCaseImp;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CreatePersonUseCaseTest {
 
 
@@ -33,21 +32,38 @@ class CreatePersonUseCaseTest {
    private final UUID ID = UUID.randomUUID();
    private final String FIRST_NAME = "Alex";
    private final String LAST_NAME = "Medeiros";
-   private final String CPF = "11111111111";
-   private final LocalDate BIRTH_DATE = LocalDate.of(2019, 12, 01);
-   private final List<Phone> PHONES =  List.of(new Phone(1L, PhoneType.COMMERCIAL, "16999994444"));
+   private final Cpf CPF = Cpf.valueOf("283.971.160-52");
+   private final BirthDate BIRTH_DATE = BirthDate.valueOf(LocalDate.of(2019, 12, 01));
+   private Phone PHONE;
+
+   @BeforeAll
+   void init() {
+      this.PHONE = Phone.builder()
+              .id(1L)
+              .type(PhoneType.COMMERCIAL.getDescription())
+              .ddd("16")
+              .number("999994444")
+              .build();
+   }
 
    @BeforeEach
    void setUp() {
       this.repository = spy(PersonRepository.class);
-      this.createPersonUseCase = new CreatePersonUseCaseImp(repository);
+      this.createPersonUseCase = new CreatePersonUseCase(repository);
    }
 
    @Test
    @DisplayName("Deve cadastrar pessoa e retornar um exception FoundPersonException")
    void shouldCreatedPersonAndReturnFoundPersonException() {
 
-      Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
+      final Person person = Person.builder()
+              .id(ID)
+              .firstName(FIRST_NAME)
+              .lastName(LAST_NAME)
+              .cpf(CPF)
+              .birthDate(BIRTH_DATE)
+              .addPhone(PHONE)
+              .build();
 
       when(repository.findByCpf(Mockito.any())).thenReturn(Optional.of(person));
 
@@ -60,7 +76,15 @@ class CreatePersonUseCaseTest {
    @DisplayName("Deve cadastrar pessoa e retornar uma exception CreatePersonFailException")
    void shouldCreatedPersonAndReturnCreatePersonFailException() {
 
-      Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
+      final Person person = Person.builder()
+              .id(ID)
+              .firstName(FIRST_NAME)
+              .lastName(LAST_NAME)
+              .cpf(CPF)
+              .birthDate(BIRTH_DATE)
+              .addPhone(PHONE)
+              .build();
+
 
       when(repository.findByCpf(Mockito.any())).thenReturn(Optional.empty());
       when(repository.save(person)).thenReturn(null);
@@ -74,12 +98,19 @@ class CreatePersonUseCaseTest {
    @DisplayName("Deve cadastrar pessoa e retorna os dados da pessoa cadastrada")
    void shouldCreatedPersonAndReturnPerson() throws FoundPersonException, CreatePersonFailException {
 
-      Person person = new Person(ID, FIRST_NAME,LAST_NAME, CPF, BIRTH_DATE, PHONES);
+      final Person person = Person.builder()
+              .id(ID)
+              .firstName(FIRST_NAME)
+              .lastName(LAST_NAME)
+              .cpf(CPF)
+              .birthDate(BIRTH_DATE)
+              .addPhone(PHONE)
+              .build();
 
       when(repository.findByCpf(Mockito.any())).thenReturn(Optional.empty());
       when(repository.save(Mockito.any())).thenReturn(person);
 
-      Person save = createPersonUseCase.create(new Person());
+      Person save = createPersonUseCase.create(mock(Person.class));
       assertThat(save).isEqualTo(person);
       assertEquals(person, save);
       assertEquals(false, person.equals(new Object()));

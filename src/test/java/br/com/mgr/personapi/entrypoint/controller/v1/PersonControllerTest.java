@@ -3,7 +3,7 @@ package br.com.mgr.personapi.entrypoint.controller.v1;
 
 import br.com.mgr.personapi.core.entity.PhoneType;
 import br.com.mgr.personapi.dataprovider.model.PersonEntity;
-import br.com.mgr.personapi.dataprovider.repository.PersonDao;
+import br.com.mgr.personapi.dataprovider.repository.PersonJpaRepository;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PersonDto;
 import br.com.mgr.personapi.entrypoint.controller.v1.dto.person.PhoneDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -35,18 +35,18 @@ class PersonControllerTest {
 
     private final String FIRST_NAME = "Alex";
     private final String LAST_NAME = "Medeiros";
-    private final String CPF = "74859661036";
+    private final String CPF = "609.534.390-97";
     private final LocalDate BIRTH_DATE = LocalDate.of(2019, 12, 01);
-    private final List<PhoneDto> PHONES =  List.of(new PhoneDto(null, PhoneType.COMMERCIAL.getDescription(), "16999994444"));
+    private final List<PhoneDto> PHONES =  List.of(new PhoneDto(null, PhoneType.COMMERCIAL.getDescription(), "16", "999994444"));
 
     @Autowired
-    private PersonDao personDao;
+    private PersonJpaRepository personJpaRepository;
 
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        personDao.deleteAll();
+        personJpaRepository.deleteAll();
     }
 
     @Test
@@ -109,7 +109,7 @@ class PersonControllerTest {
                 .all()
                 .statusCode(HttpStatus.CREATED.value());
 
-        Optional<PersonEntity> byCpf = personDao.findByCpf(CPF);
+        Optional<PersonEntity> byCpf = personJpaRepository.findByCpf(CPF);
         UUID id = UUID.fromString("abbb1708-f188-4d0f-acba-12a761ad5e93");
         if (byCpf.isPresent()) {
             id = byCpf.get().getId();
@@ -215,7 +215,7 @@ class PersonControllerTest {
                 .all()
                 .statusCode(HttpStatus.CREATED.value());
 
-        Optional<PersonEntity> byCpf = personDao.findByCpf(CPF);
+        Optional<PersonEntity> byCpf = personJpaRepository.findByCpf(CPF);
         UUID id = UUID.fromString("abbb1708-f188-4d0f-acba-12a761ad5e93");
         if (byCpf.isPresent()) {
             id = byCpf.get().getId();
@@ -262,7 +262,7 @@ class PersonControllerTest {
                 .all()
                 .statusCode(HttpStatus.CREATED.value());
 
-        Optional<PersonEntity> byCpf = personDao.findByCpf(CPF);
+        Optional<PersonEntity> byCpf = personJpaRepository.findByCpf(CPF);
         UUID id = UUID.fromString("abbb1708-f188-4d0f-acba-12a761ad5e93");
         if (byCpf.isPresent()) {
             id = byCpf.get().getId();

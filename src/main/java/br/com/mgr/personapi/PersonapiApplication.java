@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
-@ComponentScan({"br.com.mgr.personapi.configuration"})
+@ComponentScan({ "br.com.mgr.personapi.dataprovider.repository", "br.com.mgr.personapi.configuration"})
 public class PersonapiApplication {
 
 	public static void main(String[] args) {
